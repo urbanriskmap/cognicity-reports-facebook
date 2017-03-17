@@ -1,5 +1,5 @@
 # cognicity-reports-facebook
-This deploys serverless lambdas that, after user initiates a conversation, fetch a report card from the server and sends it to them via Facebook messenger
+This module deploys serverless lambdas that, after user initiates a conversation via Facebook messenger, fetch a report card from the server and sends it to them.
 
 ### Install
 `npm install`
