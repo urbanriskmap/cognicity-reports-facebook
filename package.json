@@ -1,10 +1,19 @@
 {
-  "name": "facebookmessenger",
+  "name": "cognicity-reports-facebook",
   "version": "1.0.0",
   "description": "A serverless messenger chatbot which will send one time card links and report notifications",
   "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/urbanriskmap/cognicity-reports-facebook.git"
+  },
+  "author": "Maanasa Priyaa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urbanriskmap/cognicity-reports-facebook/issues"
   },
   "author": "",
   "license": "MIT",
