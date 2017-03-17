@@ -1,0 +1,15 @@
+{
+  "name": "facebookmessenger",
+  "version": "1.0.0",
+  "description": "A serverless messenger chatbot which will send one time card links and report notifications",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "request": "^2.80.0"
+  }
+}
