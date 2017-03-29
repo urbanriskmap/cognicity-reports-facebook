@@ -17,7 +17,10 @@ const options = {
 
 // GRASP operating regions
 const instance_regions = {
-  chn: 'chennai'
+  chn: 'chennai',
+  jbd: 'jakarta',
+  sby: 'surabaya',
+  bdg: 'bandung'
 }
 
 // Replies to user
@@ -76,12 +79,18 @@ module.exports.webhook = (event, context, callback) => {
   if (event.method === 'POST') {
     event.body.entry.map((entry) => {
       entry.messaging.map((messagingItem) => {
-        if (messagingItem.message && messagingItem.message.text) {
+        if (messagingItem.message && messagingItem.message.text &&
+          (messagingItem.message.text.toLowerCase().includes('banjir') ||
+          messagingItem.message.text.toLowerCase().includes('flood'))) {
           // Form JSON request body
+          var language = process.env.DEFAULT_LANG;
+          if (messagingItem.message.text.toLowerCase().includes('flood')) {
+            language = 'en';
+          }
           var card_request = {
             "username": messagingItem.sender.id.toString(),
             "network": "facebook",
-            "language": process.env.DEFAULT_LANG
+            "language": language
           }
 
           // Get a card from Cognicity server
@@ -96,7 +105,7 @@ module.exports.webhook = (event, context, callback) => {
             if (!error && response.statusCode === 200){
               //Construct the text message to be sent to the user
               var messageText = replies[process.env.DEFAULT_LANG];
-              messageText += "\n" + process.env.CARD_PATH + "flood" + "/" + body.cardId + "/report";
+              messageText += "\n" + process.env.CARD_PATH + "/" + body.cardId + "/report";
               const payload = {
                 recipient: {
                   id: messagingItem.sender.id
