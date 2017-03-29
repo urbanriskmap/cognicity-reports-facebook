@@ -3,6 +3,8 @@ service: facebookmessenger
 provider:
   name: aws
   runtime: nodejs4.3
+  stage: dev
+  region: ap-southeast-1
 
 # You can overwrite defaults by adding the following
 #  stage: dev
