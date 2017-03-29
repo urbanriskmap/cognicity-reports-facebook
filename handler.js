@@ -22,12 +22,14 @@ const instance_regions = {
 
 // Replies to user
 const replies = {
-  'en': 'Hi! Report using this link, thanks.'
+  'en': 'Hi! Report using this link, thanks.',
+  'id': 'Hi! Laporkan menggunakan link ini. Terima kasih.'
 }
 
 // Confirmation message to user
 const confirmations = {
-  'en': "Hi! Thanks for your report. I've put it on the map."
+  'en': "Hi! Thanks for your report. I've put it on the map.",
+  'id': 'Hi! Terima kasih atas laporan Anda. Aku sudah menaruhnya di peta.'
 }
 
 /*
