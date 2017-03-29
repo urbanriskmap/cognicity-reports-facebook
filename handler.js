@@ -4,15 +4,17 @@ const request = require('request');
 require('dotenv').config({silent:true});
 
 // GRASP card
-const options = {
+var options = {
   host: process.env.SERVER,
   path: '/cards',
   method: 'POST',
-  port: 80,
   headers: {
     'x-api-key': process.env.X_API_KEY,
     'Content-Type': 'application/json'
   }
+}
+if (process.env.SERVER_PORT) {
+  options.port = process.env.SERVER_PORT;
 }
 
 // GRASP operating regions
@@ -104,8 +106,8 @@ module.exports.webhook = (event, context, callback) => {
           }, function(error, response, body){
             if (!error && response.statusCode === 200){
               //Construct the text message to be sent to the user
-              var messageText = replies[process.env.DEFAULT_LANG];
-              messageText += "\n" + process.env.CARD_PATH + "/" + body.cardId + "/report";
+              var messageText = replies[language];
+              messageText += "\n" + process.env.CARD_PATH + "/" + body.cardId;
               const payload = {
                 recipient: {
                   id: messagingItem.sender.id
