@@ -30,6 +30,7 @@ Save a copy of sample.env as .env in local directory with appropriate credential
 * `X_API_KEY`: API Key needed to make calls to the deployed server (Set it to "" during local testing)
 * `PG_CON`: Connection string for the Postgres database
 * `SERVER`: Cognicity server URL to fetch unique cardIds
+* `BOTNAME`: Bot/Platform name to be sent in the Greeting text.
 
 #### Misc Notes
 - AWS credentials are stored in bash_profile
