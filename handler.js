@@ -65,8 +65,45 @@ function callSendAPI(messageData) {
   });
 }
 
+/*
+ * Call the Send API. The message data goes in the body. If successful, we'll
+ * get the message id in a response
+ *
+ */
+function sendGreetingText() {
+  var messageData = {
+    "setting_type":"greeting",
+    "greeting": {
+      "text":"Hi {{user_first_name}}, welcome to" + process.env.BOTNAME  + "bot. Click on 'Get Started' button to interact with the bot."
+    }
+  };
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
+    qs: { access_token: process.env.PAGEACCESSTOKEN },
+    method: 'POST',
+    json: messageData
+
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      if (messageId) {
+        console.log("Successfully sent message with id %s to recipient %s",
+          messageId, recipientId);
+      } else {
+      console.log("Successfully called Send API for recipient %s",
+        recipientId);
+      }
+    } else {
+      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+    }
+  });
+}
+
 // Webhook handler - This is the method called by Facebook when you verify webhooks for the app
 module.exports.webhook = (event, context, callback) => {
+  console.log(JSON.stringify(event.body));
   if (event.method === 'GET') {
     // Facebook app verification
     if (event.query['hub.verify_token'] === process.env.VALIDATIONTOKEN && event.query['hub.challenge']) {
@@ -121,6 +158,67 @@ module.exports.webhook = (event, context, callback) => {
               callback(err, null); // Return error
             }
           });
+        } else if(messagingItem.postback && messagingItem.postback.payload) {
+          if (messagingItem.postback.payload === "GET_STARTED_PAYLOAD") {
+            var payload = {
+              recipient: {
+                id: messagingItem.sender.id
+              },
+              message: {
+                attachment: {
+                  type: "template",
+                  payload: {
+                    template_type: "button",
+                    text: "Please select one of the below options to get one-time link for reporting",
+                    buttons:[
+                      {
+                        "type":"postback",
+                        "title":"Report flood",
+                        "payload":"Flood"
+                      }
+                    ]
+                  }
+                }
+              }
+            };
+            callSendAPI(payload);
+          } else if (messagingItem.postback.payload === "Flood") {
+            var language = process.env.DEFAULT_LANG;
+            var card_request = {
+              "username": messagingItem.sender.id.toString(),
+              "network": "facebook",
+              "language": language
+            }
+
+            // Get a card from Cognicity server
+            request({
+              url: options.host + options.path,
+              method: options.method,
+              headers: options.headers,
+              port: options.port,
+              json: true,
+              body: card_request
+            }, function(error, response, body){
+              if (!error && response.statusCode === 200){
+                //Construct the text message to be sent to the user
+                var messageText = replies[process.env.DEFAULT_LANG];
+                messageText += "\n" + process.env.CARD_PATH + "/" + body.cardId + "/report";
+                const payload = {
+                  recipient: {
+                    id: messagingItem.sender.id
+                  },
+                  message: {
+                    text: messageText
+                  }
+                };
+
+                callSendAPI(payload);
+              } else {
+                var err = 'Error getting card: ' + JSON.stringify(error) + JSON.stringify(response);
+                callback(err, null); // Return error
+              }
+            });
+          }
         }
       });
     });

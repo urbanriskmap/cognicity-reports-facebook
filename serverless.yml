@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   stage: dev
-  region: ap-southeast-1
+  region: ap-south-1
 
 # You can overwrite defaults by adding the following
 #  stage: dev
