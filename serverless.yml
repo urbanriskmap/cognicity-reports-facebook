@@ -5,6 +5,8 @@ provider:
   runtime: nodejs6.10
   stage: dev
   region: ap-southeast-1
+  stackTags:
+    area: ${file(./tags.yml):area}
 
 # You can overwrite defaults by adding the following
 #  stage: dev

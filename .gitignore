@@ -7,3 +7,5 @@ jspm_packages
 
 # Optional env file
 .env
+
+tags.yml
