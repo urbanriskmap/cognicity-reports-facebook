@@ -9,3 +9,6 @@ jspm_packages
 .env
 
 tags.yml
+
+*.swp
+*.env.yml
