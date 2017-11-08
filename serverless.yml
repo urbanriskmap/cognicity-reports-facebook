@@ -6,7 +6,6 @@ custom:
 provider:
   name: aws
   runtime: nodejs6.10
-  region: ${file(./${opt:area}.env.yml):region}
   stackTags:
     area: ${file(./${opt:area}.env.yml):area}
   stage: ${file(./${opt:area}.env.yml):stage}
