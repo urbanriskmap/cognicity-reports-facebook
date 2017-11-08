@@ -1,21 +1,19 @@
 'use strict';
 
 const request = require('request');
-require('dotenv').config({
-  silent: true
-});
+require('dotenv').config();
 
 // GRASP card
 const options = {
-  host: process.env.SERVER,
+  host: process.env.SERVER_PATH,
   path: '/cards',
   method: 'POST',
-  port: 80,
+  port: process.env.SERVER_PORT,
   headers: {
-    'x-api-key': process.env.X_API_KEY,
+    'x-api-key': process.env.SERVER_API_KEY,
     'Content-Type': 'application/json'
   }
-}
+};
 
 // GRASP operating regions
 const instance_regions = {
@@ -23,18 +21,68 @@ const instance_regions = {
   jbd: 'jakarta',
   sby: 'surabaya',
   bdg: 'bandung'
+};
+
+// Welcome message to user (telegram)
+const initiate = {
+  'en': 'Welcome! Type in /flood to request a card link',
+  'id': 'Selamat datang! ketik /banjir untuk meminta link kartu'
 }
 
 // Replies to user
 const replies = {
   'en': 'Hi! Report using this link, thanks.',
   'id': 'Hi! Laporkan menggunakan link ini. Terima kasih.'
-}
+};
 
 // Confirmation message to user
 const confirmations = {
   'en': "Hi! Thanks for your report. I've put it on the map.",
   'id': 'Hi! Terima kasih atas laporan Anda. Aku sudah menaruhnya di peta.'
+};
+
+/*
+ * Construct the initial message to be sent to the user
+ */
+function getInitialMessageText(language, cardId, disasterType) {
+  return replies[language] + "\n" + process.env.FRONTEND_CARD_PATH + "/" + disasterType + "/" + cardId;
+}
+
+/*
+ * Construct the confirmation message to be sent to the user
+ */
+function getConfirmationMessageText(language, implementationArea, reportId) {
+  return confirmations[language] + "\n" + process.env.FRONTEND_MAP_PATH + "/" + instance_regions[implementationArea] + '/' + reportId;
+}
+
+/*
+ * Get one time card link from the server
+ */
+function getCardLink(username, network, language, callback) {
+  var card_request = {
+    "username": username,
+    "network": network,
+    "language": language
+  };
+
+  console.log(options);
+  console.log(card_request);
+  // Get a card from Cognicity server
+  request({
+    url: options.host + options.path,
+    method: options.method,
+    headers: options.headers,
+    port: options.port,
+    json: true,
+    body: card_request
+  }, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      callback(null, body.cardId); //Return cardId on success
+    } else {
+      var err = 'Error getting card: ' + JSON.stringify(error) + JSON.stringify(response);
+      callback(err, null); // Return error
+    }
+  });
 }
 
 /*
@@ -42,11 +90,11 @@ const confirmations = {
  * get the message id in a response
  *
  */
-function callSendAPI(messageData) {
+function sendFacebookMessage(messageData) {
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: {
-      access_token: process.env.PAGEACCESSTOKEN
+      access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN
     },
     method: 'POST',
     json: messageData
@@ -70,11 +118,11 @@ function callSendAPI(messageData) {
 }
 
 // Webhook handler - This is the method called by Facebook when you verify webhooks for the app
-module.exports.webhook = (event, context, callback) => {
-  console.log(JSON.stringify(event.body));
+module.exports.facebookWebhook = (event, context, callback) => {
+  console.log(JSON.stringify(event));
   if (event.method === 'GET') {
     // Facebook app verification
-    if (event.query['hub.verify_token'] === process.env.VALIDATIONTOKEN && event.query['hub.challenge']) {
+    if (event.query['hub.verify_token'] === process.env.FACEBOOK_VALIDATION_TOKEN && event.query['hub.challenge']) {
       return callback(null, parseInt(event.query['hub.challenge']));
     } else {
       return callback('Invalid token');
@@ -84,7 +132,7 @@ module.exports.webhook = (event, context, callback) => {
   if (event.method === 'POST') {
     event.body.entry.map((entry) => {
       entry.messaging.map((messagingItem) => {
-        if (messagingItem.message && messagingItem.message.text &&
+        if (messagingItem.message && messagingItem.message.text && //Code can be removed after updating Petabencana bot because we want to use only menu based communication
           (messagingItem.message.text.toLowerCase().includes('banjir') ||
             messagingItem.message.text.toLowerCase().includes('flood'))) {
           // Form JSON request body
@@ -92,25 +140,12 @@ module.exports.webhook = (event, context, callback) => {
           if (messagingItem.message.text.toLowerCase().includes('flood')) {
             language = 'en';
           }
-          var card_request = {
-            "username": messagingItem.sender.id.toString(),
-            "network": "facebook",
-            "language": language
-          }
 
-          // Get a card from Cognicity server
-          request({
-            url: options.host + options.path,
-            method: options.method,
-            headers: options.headers,
-            port: options.port,
-            json: true,
-            body: card_request
-          }, function(error, response, body) {
-            if (!error && response.statusCode === 200) {
-              //Construct the text message to be sent to the user
-              var messageText = replies[process.env.DEFAULT_LANG];
-              messageText += "\n" + process.env.CARD_PATH + "flood/" + body.cardId + "/report";
+          getCardLink (messagingItem.sender.id.toString(), "facebook", language, function(error, cardId) {
+            if(error) {
+              console.log(error);
+            } else {
+              var messageText = getInitialMessageText(language, cardId, 'flood');
               const payload = {
                 recipient: {
                   id: messagingItem.sender.id
@@ -119,11 +154,7 @@ module.exports.webhook = (event, context, callback) => {
                   text: messageText
                 }
               };
-
-              callSendAPI(payload);
-            } else {
-              var err = 'Error getting card: ' + JSON.stringify(error) + JSON.stringify(response);
-              callback(err, null); // Return error
+              sendFacebookMessage(payload);
             }
           });
         } else if (messagingItem.postback && messagingItem.postback.payload) {
@@ -145,7 +176,7 @@ module.exports.webhook = (event, context, callback) => {
                       },
                       {
                         "type": "postback",
-                        "title": "Report grievances",
+                        "title": "Monsoon preparations",
                         "payload": "prep"
                       }
                     ]
@@ -153,28 +184,14 @@ module.exports.webhook = (event, context, callback) => {
                 }
               }
             };
-            callSendAPI(payload);
+            sendFacebookMessage(payload);
           } else if (messagingItem.postback.payload === "flood" || messagingItem.postback.payload === "prep") {
             var language = process.env.DEFAULT_LANG;
-            var card_request = {
-              "username": messagingItem.sender.id.toString(),
-              "network": "facebook",
-              "language": language
-            }
-
-            // Get a card from Cognicity server
-            request({
-              url: options.host + options.path,
-              method: options.method,
-              headers: options.headers,
-              port: options.port,
-              json: true,
-              body: card_request
-            }, function(error, response, body) {
-              if (!error && response.statusCode === 200) {
-                //Construct the text message to be sent to the user
-                var messageText = replies[process.env.DEFAULT_LANG];
-                messageText += "\n" + process.env.CARD_PATH + messagingItem.postback.payload + "/" + body.cardId + "/report";
+            getCardLink (messagingItem.sender.id.toString(), "facebook", language, function(error, cardId) {
+              if(error) {
+                console.log(error);
+              } else {
+                var messageText = getInitialMessageText(language, cardId, messagingItem.postback.payload);
                 const payload = {
                   recipient: {
                     id: messagingItem.sender.id
@@ -183,11 +200,7 @@ module.exports.webhook = (event, context, callback) => {
                     text: messageText
                   }
                 };
-
-                callSendAPI(payload);
-              } else {
-                var err = 'Error getting card: ' + JSON.stringify(error) + JSON.stringify(response);
-                callback(err, null); // Return error
+                sendFacebookMessage(payload);
               }
             });
           }
@@ -197,14 +210,12 @@ module.exports.webhook = (event, context, callback) => {
   }
 };
 
-module.exports.reply = (event, context, callback) => {
+module.exports.facebookReply = (event, context, callback) => {
   //This module listens in to SNS Facebook topic and reads the message published
   var message = JSON.parse(event.Records[0].Sns.Message);
   console.log("Message received from SNS topic: " + message);
 
-  //Construct the confirmation message to be sent to the user
-  var messageText = confirmations[message.language];
-  messageText += "\n" + process.env.MAPSERVER + instance_regions[message.implementation_area] + '/' + message.report_id;
+  var messageText = getConfirmationMessageText(message.language, message.implementation_area, message.report_id);
   const payload = {
     recipient: {
       id: message.username
@@ -215,5 +226,5 @@ module.exports.reply = (event, context, callback) => {
   };
 
   //Call Send API to confirmation message with report link to the user
-  callSendAPI(payload);
+  sendFacebookMessage(payload);
 };
