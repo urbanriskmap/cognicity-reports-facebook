@@ -10,5 +10,8 @@ jspm_packages
 
 tags.yml
 
-*.swp
 *.env.yml
+
+*.swp
+*.swo
+keys.sh
