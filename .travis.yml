@@ -14,4 +14,4 @@ before_install:
   - npm install -g serverless
 install: npm install
 script:
-  - serverless deploy --area Indonesia
+  - serverless deploy --area Indonesia-$TRAVIS_BRANCH
