@@ -10,15 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/urbanriskmap/cognicity-reports-facebook.git"
   },
-  "author": "Maanasa Priyaa",
+  "author": "Maanasa Priyaa, Abraham Quintero",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/urbanriskmap/cognicity-reports-facebook/issues"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "dotenv": "^4.0.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "serverless-plugin-scripts": "^1.0.2"
   }
 }

@@ -15,5 +15,3 @@ before_install:
 install: npm install
 script:
   - serverless deploy --area Indonesia
-after_success:
-  - ./deploy_buttons.sh

@@ -1,7 +1,14 @@
 service: riskmapbot
 
+plugins:
+  - serverless-plugin-scripts
+
 custom:
   projectName: riskmapbot
+  scripts:
+    hooks:
+      #when the lambda is set up, we should make sure to deploy the buttons
+      'deploy:finalize': export FACEBOOK_PAGE_ACCESS_TOKEN=${file(./${opt:area}.env.yml):facebookpageaccesstoken} && ./deploy_buttons.sh
 
 provider:
   name: aws

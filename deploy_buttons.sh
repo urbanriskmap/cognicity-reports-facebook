@@ -22,7 +22,7 @@ get_started=$(cat <<-EOF
     "thread_state": "new_thread",
     "call_to_actions": [{
     "payload": "GET_STARTED_PAYLOAD"
-    	  }]
+    }]
   }
 EOF
 )
@@ -34,7 +34,7 @@ success="$(curl -s -o /dev/null -X POST -H "Content-Type: application/json" -d "
 if [ $((success)) -eq 200 ]
 then
   echo "Successfully set GET_STARTED_PAYLOAD"
-else 
+else
   echo "Failed to set GET_STARTED_PAYLOAD"
   exit 1
 fi
@@ -53,17 +53,15 @@ fi
 # ---------------------
 
 
-#status 
+#status
 #curl -X GET "https://graph.facebook.com/v2.6/me/messenger_profile?fields=greeting&access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
 
-greeting=$(cat <<-EOF 
+greeting=$(cat <<-EOF
   {
-    "greeting":[
-    {
+    "greeting":[{
       "locale":"default",
       "text":"Hello {{user_full_name}}! Welcome to RiskMap bot. Click on Get Started button to start a conversation with the bot."
-    }
-    ]
+    }]
   }
 EOF
 )
@@ -74,12 +72,12 @@ success="$(curl -s -o /dev/null -X POST -H "Content-Type: application/json" -d "
 if [ $((success)) -eq 200 ]
 then
   echo "Successfully set greeting"
-else 
+else
   echo "Failed to set greeting"
   exit 1
 fi
 
-#To delete the greeting set above, use this HTTP REST call: 
+#To delete the greeting set above, use this HTTP REST call:
 #curl -X DELETE -H "Content-Type: application/json" -d '{
 #  "fields":[
 #    "greeting"
@@ -124,14 +122,10 @@ curl -D - -X POST -H "Content-Type: application/json" -d "$persistent_menu" "htt
 #del_menu=$(cat <<-EOF
 #  '{
 #    "fields":[
-#  
 #        "persistent_menu"
-#  
 #          ]
-#  
 #  }'
 #EOF
 #)
-#
 #
 #curl -X DELETE -H "Content-Type: application/json" -d "$del_menu" "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
