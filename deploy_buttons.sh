@@ -102,13 +102,7 @@ persistent_menu=$(cat <<-EOF
             "title": "Report flood",
             "type": "postback",
             "payload": "flood"
-          },
-          {
-            "title": "Monsoon preparations",
-            "type": "postback",
-            "payload": "prep"
-          }
-        ]
+          }]
       }]
   }'
 EOF
