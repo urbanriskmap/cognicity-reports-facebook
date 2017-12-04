@@ -12,9 +12,6 @@ fi
 # Set Get started button
 # ----------------------
 
-#check status
-#curl -X GET "https://graph.facebook.com/v2.6/me/messenger_profile?fields=get_started&access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
-
 #Get Started button shows up first time users look up the bot
 get_started=$(cat <<-EOF
   {
@@ -39,22 +36,12 @@ else
   exit 1
 fi
 
-#To delete the get started button above, make the following HTTP request
-#curl -X DELETE -H "Content-Type: application/json" -d '{
-#
-#  "setting_type":"call_to_actions",
-#
-#  "thread_state":"new_thread"
-#
-#}' "https://graph.facebook.com/v2.6/me/thread_settings?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
 
 # ---------------------
 # Set Greeting Text
 # ---------------------
 
 
-#status
-#curl -X GET "https://graph.facebook.com/v2.6/me/messenger_profile?fields=greeting&access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
 
 greeting=$(cat <<-EOF
   {
@@ -77,34 +64,26 @@ else
   exit 1
 fi
 
-#To delete the greeting set above, use this HTTP REST call:
-#curl -X DELETE -H "Content-Type: application/json" -d '{
-#  "fields":[
-#    "greeting"
-#  ]
-#}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
-#
-
 # ---------------------
 # Set Persistant menu
 # ---------------------
 
-#status
-#curl -X GET "https://graph.facebook.com/v2.6/me/messenger_profile?fields=persistent_menu&access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
 
 persistent_menu=$(cat <<-EOF
-  '{
-    "persistent_menu": [{
-        "locale": "default",
-        "composer_input_disabled": true,
-        "call_to_actions": [
-          {
-            "title": "Report flood",
-            "type": "postback",
-            "payload": "flood"
-          }]
-      }]
-  }'
+{
+            "persistent_menu": [
+                {
+                    "call_to_actions": [
+                        {
+                            "payload": "flood",
+                            "title": "Report flood",
+                            "type": "postback"
+                        }],
+                    "composer_input_disabled": true,
+                    "locale": "default"
+                }
+            ]
+    }
 EOF
 )
 
@@ -112,14 +91,3 @@ echo "persistent_menu menu: $persistent_menu"
 
 curl -D - -X POST -H "Content-Type: application/json" -d "$persistent_menu" "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
 
-#Delete the persistent menu
-#del_menu=$(cat <<-EOF
-#  '{
-#    "fields":[
-#        "persistent_menu"
-#          ]
-#  }'
-#EOF
-#)
-#
-#curl -X DELETE -H "Content-Type: application/json" -d "$del_menu" "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
