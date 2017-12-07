@@ -173,11 +173,6 @@ module.exports.facebookWebhook = (event, context, callback) => {
                         "type": "postback",
                         "title": "Report flood",
                         "payload": "flood"
-                      },
-                      {
-                        "type": "postback",
-                        "title": "Monsoon preparations",
-                        "payload": "prep"
                       }
                     ]
                   }
