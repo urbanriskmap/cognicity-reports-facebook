@@ -20,7 +20,8 @@ const instance_regions = {
   chn: 'chennai',
   jbd: 'jakarta',
   sby: 'surabaya',
-  bdg: 'bandung'
+  bdg: 'bandung',
+  srg: 'semarang'
 };
 
 // Welcome message to user (telegram)
