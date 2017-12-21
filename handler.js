@@ -34,7 +34,7 @@ const initiate = {
 // Replies to user
 const replies = {
   'en': 'Hi! Report using this link, thanks.',
-  'id': 'Hi! Laporkan menggunakan link ini. Terima kasih.'
+  'id': 'Hi! Laporkan menggunakan link ini. Terima kasih.',
   'in': 'Hi! Laporkan menggunakan link ini. Terima kasih.'
 };
 
