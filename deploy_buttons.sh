@@ -46,8 +46,8 @@ fi
 greeting=$(cat <<-EOF
   {
     "greeting":[{
-      "locale":"default",
-      "text":"Hello {{user_full_name}}! Welcome to RiskMap bot. Click on Get Started button to start a conversation with the bot."
+      "locale": "default",
+      "text":"Hai {{user_full_name}}!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir"
     }]
   }
 EOF
