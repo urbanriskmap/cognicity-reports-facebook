@@ -46,7 +46,7 @@ fi
 greeting=$(cat <<-EOF
   {
     "greeting":[{
-      "locale": "default",
+      "locale":"default",
       "text":"Hai {{user_full_name}}!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir"
     }]
   }
@@ -76,7 +76,7 @@ persistent_menu=$(cat <<-EOF
                     "call_to_actions": [
                         {
                             "payload": "flood",
-                            "title": "Report flood",
+                            "title": "Laporkan banjir",
                             "type": "postback"
                         }],
                     "composer_input_disabled": true,
@@ -90,4 +90,3 @@ EOF
 echo "persistent_menu menu: $persistent_menu"
 
 curl -D - -X POST -H "Content-Type: application/json" -d "$persistent_menu" "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=$FACEBOOK_PAGE_ACCESS_TOKEN"
-
