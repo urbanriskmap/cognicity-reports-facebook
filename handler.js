@@ -27,22 +27,19 @@ const instance_regions = {
 // Welcome message to user (telegram)
 const initiate = {
   'en': 'Welcome! Type in /flood to request a card link',
-  'id': 'Selamat datang! ketik /banjir untuk meminta link kartu',
-  'in': 'Hai!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir'
+  'id': 'Hai!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir'
 }
 
 // Replies to user
 const replies = {
   'en': 'Hi! Report using this link, thanks.',
   'id': 'Hi! Laporkan menggunakan link ini. Terima kasih.',
-  'in': 'Hi! Laporkan menggunakan link ini. Terima kasih.'
 };
 
 // Confirmation message to user
 const confirmations = {
   'en': "Hi! Thanks for your report. I've put it on the map.",
   'id': 'Hi! Terima kasih atas laporan Anda. Aku sudah menaruhnya di peta.',
-  'in': 'Hi! Terima kasih atas laporan Anda. Aku sudah menaruhnya di peta.'
 };
 
 /*
