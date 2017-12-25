@@ -30,6 +30,11 @@ const initiate = {
   'id': 'Hai!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir'
 }
 
+const submit_button = {
+  'en': 'Report flood',
+  'id': 'Laporkan banjir',
+}
+
 // Replies to user
 const replies = {
   'en': 'Hi! Report using this link, thanks.',
@@ -168,10 +173,10 @@ module.exports.facebookWebhook = (event, context, callback) => {
                   type: "template",
                   payload: {
                     template_type: "button",
-                    text: "Please select one of the below options to get one-time link for reporting",
+                    text: initiate[language],
                     buttons: [{
                         "type": "postback",
-                        "title": "Report flood",
+                        "title": submit_button[language],
                         "payload": "flood"
                       }
                     ]
