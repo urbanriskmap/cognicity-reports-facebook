@@ -47,7 +47,7 @@ greeting=$(cat <<-EOF
   {
     "greeting":[{
       "locale":"default",
-      "text":"Hai {{user_full_name}}!!  Saya BencanaBot. Tekan menu di bawah atau ketik ’Laporkan banjir"
+      "text":"Hai {{user_full_name}}!!  Saya BencanaBot. Tekan menu di bawah atau ketik ‘Laporkan banjir’ untuk melaporkan banjir di sekitarmu."
     }]
   }
 EOF
