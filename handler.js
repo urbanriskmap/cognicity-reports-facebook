@@ -89,7 +89,6 @@ function getCardLink(username, network, language, callback) {
 /*
  * Call the Send API. The message data goes in the body. If successful, we'll
  * get the message id in a response
- *e
  */
 function sendFacebookMessage(messageData) {
   request({
