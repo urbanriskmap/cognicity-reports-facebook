@@ -47,7 +47,7 @@ greeting=$(cat <<-EOF
   {
     "greeting":[{
       "locale":"default",
-      "text":"Hello {{user_full_name}}! Welcome to RiskMap bot. Click on Get Started button to start a conversation with the bot."
+      "text":"Hai {{user_full_name}}!!  Saya BencanaBot. Tekan menu di bawah atau ketik ‘Laporkan banjir’ untuk melaporkan banjir di sekitarmu."
     }]
   }
 EOF
@@ -76,7 +76,7 @@ persistent_menu=$(cat <<-EOF
                     "call_to_actions": [
                         {
                             "payload": "flood",
-                            "title": "Report flood",
+                            "title": "Laporkan banjir",
                             "type": "postback"
                         }],
                     "composer_input_disabled": true,
