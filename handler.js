@@ -184,6 +184,8 @@ module.exports.facebookWebhook = (event, context, callback) => {
                 }
               }
             };
+            console.log("Responding to GET_STARTED_PAYLOAD with:");
+            console.log(payload);
             sendFacebookMessage(payload);
           } else if (messagingItem.postback.payload === "flood" || messagingItem.postback.payload === "prep") {
             var language = process.env.DEFAULT_LANG;
