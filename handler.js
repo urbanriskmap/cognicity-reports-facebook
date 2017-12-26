@@ -173,10 +173,10 @@ module.exports.facebookWebhook = (event, context, callback) => {
                   type: "template",
                   payload: {
                     template_type: "button",
-                    text: initiate[language],
+                    text: initiate['id'],
                     buttons: [{
                         "type": "postback",
-                        "title": submit_button[language],
+                        "title": submit_button['id'],
                         "payload": "flood"
                       }
                     ]
@@ -185,7 +185,7 @@ module.exports.facebookWebhook = (event, context, callback) => {
               }
             };
             console.log("Responding to GET_STARTED_PAYLOAD with:");
-            console.log(payload);
+            console.log(payload.message.payload);
             sendFacebookMessage(payload);
           } else if (messagingItem.postback.payload === "flood" || messagingItem.postback.payload === "prep") {
             var language = process.env.DEFAULT_LANG;
