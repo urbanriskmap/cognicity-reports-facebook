@@ -13,59 +13,55 @@ const reportButtons = {'flood', 'prep'};
 export default function(config) {
   let methods = {};
   /**
-    * Issues defaul reply message to user
+    * Issues default message to user
     * @function _sendDefault
+    * @param {Object} lang - Facebook user language
     * @param {Number} userId - Facebook user ID
     * @return {Object} - Promise that message issued
     */
-  methods._sendDefault = (userId) => new Promise((resolve, reject) => {
-    request({
-      uri: 'https://graph.facebook.com/v2.6/' + userId + '?fields=locale' +
-      '&access_token=' + process.env.PAGE_ACCESS_TOKEN,
-      method: 'GET',
-    }, function(error, response, body) {
-      if (!error && response.statuscode == 200) {
-        var [userLang, userRegion] = body.locale.split('_');
-
-        if (userRegion == 'IN') {
-          userLang = 'en';
-        }
-
-        facebook(config).sendMessage(messages(config).default(
-          userLang, userId))
-          .then((response) => resolve(response))
-          .catch((err) => { 
-            reject(new Error('Error sending message, response '
-                    + 'from Facebook was: ' + err));
-          });
-      } else {
-        var err = 'Failed calling Profile API for user: ' + userId + 
-                    JSON.stringify(error) + JSON.stringify(response);
-        console.error(err);
-      }
+  methods._sendDefault = (lang, locale, userId) =>
+                          new Promise((resolve, reject) => {
+    facebook(config).sendMessage(messages(config).default(
+      lang, locale, userId))
+      .then((response) => resolve(response))
+      .catch((err) => { 
+        reject(new Error('Error sending message, response from Facebook was: '
+                         + err));
     });
-  });
+  }); 
 
   /**
     * Issues card reply message to user
     * @function _sendCard
     * @param {Number} userId - Facebook user ID
+    * @param {Object} payload - Facebook 
     * @return {Object} - Promise that message issued
     */
-  methods._sendCard = (userId, payload) => new Promise((resolve, reject) => {
-    cards(config).getCardLink(userId.toString(), 'facebook',
-      config.app.default_lang)
+  methods._sendCard = (lang, userId, cardId) => 
+                                          new Promise((resolve, reject) => {
+    cards(config).getCardLink(userId.toString(), 'facebook', lang)
       .then((cardId) => {
-          // Send message with card link
-          facebook(config).sendMessage(messages(config).card(lang, userId, 
-                                                             cardId))
-            .catch((err) => {
-              reject(new Error('Error sending message, response '
-            + 'from Facebook was: ' + err));
-          });
+        // Send message with card link
+        facebook(config).sendMessage(messages(config).card(lang, userId,
+                                                           cardId))
+          .catch((err) => {
+            reject(new Error('Error sending message, response from Facebook: '
+                             + err));
+        });
       })
-      .catch((err) => {
+      .catch(err) => {
         reject(err);
+      });
+  });
+
+  methods._sendThanks = (lang, region, userId, reportId) => 
+                                            new Promise((resolve, reject) => {
+    facebook(config).sendMessage(messages(config)
+                                .thanks(lang, region, userId, reportId)
+      .then((response) => resolve(response))
+      .catch((err) => {
+        reject(new Error('Error sending message, response from Facebook was: '
+                         + err));
       });
   });
 
@@ -76,22 +72,23 @@ export default function(config) {
     * @param {Object} userId - Facebook user ID
     * @return {Object} // TODO
     */
-  methods._getLocale = (userId) => new Promise((resolve, reject) => {
-    request({
-      uri: 'https://graph.facebook.com/v2.6/' + userId + '?fields=locale' +
-           '&access_token=' + process.env.PAGE_ACCESS_TOKEN,
-      method: 'GET',
-    }, function(error, response, body) {
+  methods._getLocale = (userId) => {
+    let profileURI = 'https://graph.facebook.com/v2.6/' + userId
+      + '?fields=locale&access_token=' + process.env.PAGE_ACCESS_TOKEN;
+    request(profileURI, function(error, response, body) {
       if (!error && statuscode === 200) {
         let [userLang, userRegion] = body.locale.split('_');
-        if (userRegion == 'IN') {
+        if (userRegion === 'IN') {
           userLang = 'en';
         }
-        callback(userLang); // Return user's locale
-        callback(userRegion);
+        return [userLang, userRegion];
+      } else {
+        var err = 'Failed calling Profile API for user: ' + userId + 
+                    JSON.stringify(error) + JSON.stringify(response);
+        console.error(err);
       }
     });
-  });
+  };
 
   /**
     * Process incoming message event and issue reply message if required
@@ -102,24 +99,34 @@ export default function(config) {
   methods.process = (event) => new Promise((resolve, reject) => {
     let replies = []; // Array of replies for this event
     // loop through message events
+    
+    // Check the structure for this and for our SNS messages
     event.entry.messaging.forEach(function(messageEvent) {
       if (messageEvent.postback && messageEvent.postback.payload &&
           messageEvent.sender.id !== messageEvent.recipient.id) {
         
         let userId = messageEvent.sender.id;
-        let lang = process.env.default_lang;
-        let payload = messageEvent.postback.payload;
+        let location = methods._getLocale(userId);
+        let lang = location[0];
+        let locale = location[1];
 
         if (payload === getStarted) {
-          replies.push(methods._sendDefault(userId));
+          replies.push(methods._sendDefault(lang, locale, userId));
           break;
         } else if (payload in reportButtons) {
-          replies.push(methods._sendCard(userId, payload));
+          replies.push(methods._sendCard(lang, userId, cardId));
           break;
-        } else {
-          // TODO: set an error here
         }
-      }
+      } else {
+        let message = JSON.parse(messageEvent.Records[0].Sns.Message);
+        if (messageEvent.message && 
+                 messageEvent.sender.id !== messageEvent.recipient.id) {
+          let region = message.implementation_region;
+          let reportId = message.report_id;
+          replies.push(methods._sendThanks(lang, region, userId, reportId));
+          break;
+        }
+      } 
     });
     Promise.all(replies).then((values) => {
       resolve(values);
@@ -128,4 +135,4 @@ export default function(config) {
     });
   });
   return methods;
-}
+};

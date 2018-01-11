@@ -12,7 +12,7 @@ const config = {
   },
   server: {
     card_endpoint: process.env.FRONTEND_CARD_PATH,
-    card_api: `https://3m3l15fwsf.execute-api.us-west-2.amazonaws.com/prod/cards`,
+    card_api: 'https://3m3l15fwsf.execute-api.us-west-2.amazonaws.com/prod/cards',
     api_key: process.env.SERVER_API_KEY,
   },
 };
@@ -28,14 +28,13 @@ module.exports.facebookReply = (event, context, callback) => {
       method: 'GET',
     }, function(error, response, body) {
       if (!error && response.statuscode == 200) {
-        var [userLang, userLocale] = body.locale.split('_');
+        var [lang, userLocale] = body.locale.split('_');
 
         if (userLocale == 'IN') {
-          userLang = 'en';
+          lang = 'en';
         }
         // Prepare message
-        let msg = messages(config).thanks(userLang, userLocale, 
-                                          message.implementation_region,
+        let msg = messages(config).thanks(lang, message.implementation_region,
                                           message.username, message.report_id);
         // Send message to user
         facebook(config).sendMessage(msg)

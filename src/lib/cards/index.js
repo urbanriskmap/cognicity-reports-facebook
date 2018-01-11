@@ -24,8 +24,8 @@ import request from 'request';
      } else if (error) {
        reject(new Error('Could not request card. Error was: ' + error.message));
      } else {
-       reject(new Error(`Could not request card. No response or incorrect body `
-         + `received from server. Response was: ` + JSON.stringify(response)));
+       reject(new Error('Could not request card. No response or incorrect body '
+         + 'received from server. Response was: ' + JSON.stringify(response)));
      }
    });
    /**

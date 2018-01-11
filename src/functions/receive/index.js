@@ -12,6 +12,7 @@ const config = {
   app: {
     default_lang: process.env.DEFAULT_LANG,
     facebook_endpoint: 'https://graph.facebook.com/v2.6/me/messages',
+    map_endpoint: process.env.MAPSERVER,
   },
   server: {
     card_endpoint: process.env.FRONTEND_CARD_PATH,
