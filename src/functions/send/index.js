@@ -1,5 +1,6 @@
 import facebook from '../../lib/facebook/';
 import messages from '../../lib/facebook/messages';
+import request from 'request';
 
 const config = {
   oauth: {
@@ -23,12 +24,12 @@ module.exports.facebookReply = (event, context, callback) => {
   console.log('Message received from SNS topic: ' + message);
 
   request({
-      uri: 'https://graph.facebook.com/v2.6/' + message.username + 
+      uri: 'https://graph.facebook.com/v2.6/' + message.username +
       '?fields=locale&access_token=' + process.env.PAGE_ACCESS_TOKEN,
       method: 'GET',
     }, function(error, response, body) {
       if (!error && response.statuscode == 200) {
-        var [lang, userLocale] = body.locale.split('_');
+        let [lang, userLocale] = body.locale.split('_');
 
         if (userLocale == 'IN') {
           lang = 'en';
@@ -38,13 +39,13 @@ module.exports.facebookReply = (event, context, callback) => {
                                           message.username, message.report_id);
         // Send message to user
         facebook(config).sendMessage(msg)
-          .then((response) => 
+          .then((response) =>
                 console.log('Successfully sent message with id %s to '
                 + 'recipient %s', response.message_id, response.recipient_id))
           .catch((err) => console.log('Message failed to send over Send API',
                                       err.code, err.type, err.message));
       } else {
-        var err = 'Failed calling Profile API for user: ' + userId + 
+        let err = 'Failed calling Profile API for user: ' + message.username +
                     JSON.stringify(error) + JSON.stringify(response);
         console.error(err);
       }

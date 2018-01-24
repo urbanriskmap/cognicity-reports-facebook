@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 // Function for sending facebook DMs
-import facebook from '../../lib/facebook/';
 import receive from './receive';
 
 const config = {
@@ -27,10 +26,11 @@ const config = {
  * @param {Object} event - AWS Lambda event object
  * @param {Object} context - AWS Lambda context object
  * @param {Function} callback - Callback
+ * @return {Object} callack - reponse callback
  */
 module.exports.facebookDMWebhook = (event, context, callback) => {
   if (event.method === 'GET') {
-    if (event.query['hub.verify_token'] === 
+    if (event.query['hub.verify_token'] ===
       process.env.FACEBOOK_VALIDATION_TOKEN && event.query['hub.challenge']) {
       return callback(null, parseInt(event.query['hub.challenge']));
     } else {

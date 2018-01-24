@@ -41,7 +41,7 @@ import request from 'request';
      let cardRequest = {
        'username': username,
        'network': network,
-       'language': language
+       'language': language,
      };
 
      // Get a card from Cognicity server

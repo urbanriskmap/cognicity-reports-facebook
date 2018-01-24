@@ -1,5 +1,4 @@
 import request from 'request';
-import crypto from 'crypto';
 
 /**
  * Facebook object for direct message interactions
@@ -8,7 +7,7 @@ import crypto from 'crypto';
  */
 export default function(config) {
   let methods = {};
-  
+
   /**
    * Prepares Facebook message request object
    * @function _prepareRequest
@@ -19,17 +18,18 @@ export default function(config) {
     let requestOptions = {
       uri: config.app.facebook_endpoint,
       qs: {
-        access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN
+        access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
       },
       method: 'POST',
-      json: true,
       headers: {
+        'x-api-key': config.server.api_key,
         'content-type': 'application/json',
       },
+      json: true,
       body: body,
     };
     // Log the message
-    console.log('Outgoing DMessage object: ' + JSON.stringify(body));
+    // console.log('Outgoing DMessage object: ' + JSON.stringify(body));
     return requestOptions;
   };
 
