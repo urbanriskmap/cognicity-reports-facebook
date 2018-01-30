@@ -44,10 +44,6 @@ module.exports.facebookReply = (event, context, callback) => {
                 + 'recipient %s', response.message_id, response.recipient_id))
           .catch((err) => console.log('Message failed to send over Send API',
                                       err.code, err.type, err.message));
-      } else {
-        let err = 'Failed calling Profile API for user: ' + message.username +
-                    JSON.stringify(error) + JSON.stringify(response);
-        console.error(err);
       }
   });
 };

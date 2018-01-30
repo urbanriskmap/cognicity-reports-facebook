@@ -43,7 +43,17 @@ export default function(config) {
     let opts = methods._prepareRequest(body);
     // Send the message
     request.post(opts, function(error, response, body) {
-      if (!error) {
+      if (!error && response.statusCode == 200) {
+        let recipientId = body.recipient_id;
+        let messageId = body.message_id;
+
+        if (messageId) {
+          console.log('Successfully sent message with id %s to recipient %s',
+            messageId, recipientId);
+        } else {
+          console.log('Successfully called Send API for recipient %s',
+            recipientId);
+        }
         resolve(response);
       } else {
         reject(error);

@@ -9,12 +9,12 @@
 import testCards from './testLibCards';
 import testFacebook from './testLibFacebook';
 import testMessages from './testMessages';
-// import testReceive from './testReceive';
+import testReceive from './testReceive';
 
 const config = {
   oauth: {
     validation_token: process.env.FACEBOOK_VALIDATION_TOKEN,
-    page_access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
+    page_access_token: 'riskmap-token',
   },
   app: {
     default_lang: 'en',
@@ -32,4 +32,4 @@ const config = {
 testCards(config);
 testFacebook(config);
 testMessages(config);
-// testReceive(config);
+testReceive(config);

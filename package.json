@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src",
-    "mocha": "nyc mocha --compilers js:babel-core/register src/test/index",
+    "mocha": "nyc mocha --require babel-core/register src/test/index",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "npm run lint && npm run mocha",
     "build": "./node_modules/.bin/babel src -d bin"
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "request": "^2.81.0",
+    "request": "^2.83.0",
     "serverless-plugin-scripts": "^1.0.2"
   },
   "devDependencies": {
@@ -35,6 +35,7 @@
     "coveralls": "^3.0.0",
     "eslint": "^4.16.0",
     "eslint-config-google": "^0.9.1",
+    "istanbul": "^0.4.5",
     "mocha": "^5.0.0",
     "nyc": "^11.4.1",
     "unit.js": "^2.0.0"
