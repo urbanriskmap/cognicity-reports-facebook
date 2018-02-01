@@ -24,13 +24,13 @@ let testMsg = {
   ],
 };
 
-let responseMsg = {
+let usLocale = {
   'locale': 'en_US',
 };
 
-let indiaMsg = {
-  'locale': ''
-}
+let indiaLocale = {
+  'locale': 'hi_IN',
+};
 
 
 /**
@@ -64,14 +64,21 @@ export default function(config) {
         done();
       });
     });
-    it('Process default message and catch error', function(done) {
-      receive(config).process(responseMsg)
-      .then(() => done())
-      .catch((err) => {
-        test.value(err.message).is('Error sending message, response from '
-          + 'Facebook was: Invalid OAuth access token.');
-        done();
-      });
+    it('Parses user locale and location to prepare message', function(done) {
+      receive(config)._processResponse(null, usLocale,
+                                       JSON.stringify(usLocale))
+      .then((location) => {
+        test.value(location).is(['en', 'US']);
+      })
+      .finally(done());
+    });
+    it('Sets English as default language for India', function(done) {
+      receive(config)._processResponse(null, indiaLocale,
+                                       JSON.stringify(indiaLocale))
+      .then((location) => {
+        test.value(location).is(['en', 'IN']);
+      })
+      .finally(done());
     });
   });
 }

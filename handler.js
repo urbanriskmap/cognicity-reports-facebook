@@ -169,7 +169,7 @@ module.exports.facebookWebhook = (event, context, callback) => {
                 id: messagingItem.sender.id
               },
               message: {
-                attachment: {
+                  attachment: {
                   type: "template",
                   payload: {
                     template_type: "button",

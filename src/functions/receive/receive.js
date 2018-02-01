@@ -64,8 +64,7 @@ export default function(config) {
     **/
   methods._processResponse = (error, response, body) =>
                                       new Promise((resolve, reject) => {
-      if (!error && response && response.statusCode === 200
-          && body) {
+      if (!error && response && body && !response.statusCode) {
         let location = JSON.parse(body).locale.split('_');
         if (location[1] === 'IN') {
           location[0] = 'en';
