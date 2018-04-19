@@ -1,17 +1,2 @@
-# package directories
-node_modules
-jspm_packages
-
-# Serverless directories
-.serverless
-
-# Optional env file
-.env
-
-tags.yml
-
-*.env.yml
-
-*.swp
-*.swo
-keys.sh
+bin/
+node_modules/
