@@ -40,7 +40,8 @@ const config = {
 
   export default (event, context, callback) => {
     console.log('Lambda handler loading');
-
+    console.log('Event', event);
+    console.log('Method', event.method);
     if (event.method === 'GET') {
       console.log('GET request, indicates possible Facebook validation');
       if (event.query['hub.verify_token'] ===
