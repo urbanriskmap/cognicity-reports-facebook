@@ -47,8 +47,7 @@ const config = {
       if (event.queryStringParameters['hub.verify_token'] ===
         process.env.FACEBOOK_VALIDATION_TOKEN && 
         event.queryStringParameters['hub.challenge']) {
-       return callback(null, 
-        parseInt(event.queryStringParameters['hub.challenge']));
+       return callback(null, response);
       } else {
         return callback(null, tokenError);
       }
