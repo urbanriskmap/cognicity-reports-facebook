@@ -8,7 +8,7 @@ const config = {
     page_access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
   },
   app: {
-    default_lang: process.env.DEFAULT_LANG,
+    default_lang: process.env.DEFAULT_LANGUAGE,
     facebook_endpoint: 'https://graph.facebook.com/v2.6/me/messages',
     map_endpoint: process.env.MAPSERVER,
   },
