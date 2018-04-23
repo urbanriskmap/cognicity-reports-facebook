@@ -45,8 +45,10 @@ const config = {
     if (event.httpMethod === 'GET') {
       console.log('GET request, indicates possible Facebook validation');
       if (event.queryStringParameters['hub.verify_token'] ===
-        process.env.FACEBOOK_VALIDATION_TOKEN && event.queryStringParameters['hub.challenge']) {
-       return callback(null, parseInt(event.queryStringParameters['hub.challenge']));
+        process.env.FACEBOOK_VALIDATION_TOKEN && 
+        event.queryStringParameters['hub.challenge']) {
+       return callback(null, 
+        parseInt(event.queryStringParameters['hub.challenge']));
       } else {
         return callback(null, tokenError);
       }
