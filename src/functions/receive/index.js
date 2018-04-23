@@ -50,7 +50,7 @@ const config = {
           let tokenResponse = {
             statusCode: 200,
             headers: {},
-            body: JSON.stringify(event.queryStringParameters['hub.challenge']),
+            body: event.queryStringParameters['hub.challenge'],
           }
        return callback(null, tokenResponse);
       } else {
