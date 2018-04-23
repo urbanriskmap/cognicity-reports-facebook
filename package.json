@@ -4,7 +4,7 @@
   "description": "Facebook Messenger bot running on AWS lambda",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint --fix src",
     "mocha": "nyc mocha --require babel-core/register src/test/index",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "npm run lint && npm run mocha",
@@ -24,6 +24,7 @@
     "url": "https://github.com/urbanriskmap/cognicity-reports-facebook/issues"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "dotenv": "^4.0.0",
     "request": "^2.83.0",
     "serverless-plugin-scripts": "^1.0.2"

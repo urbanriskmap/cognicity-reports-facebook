@@ -80,7 +80,7 @@ export default function(config) {
     });
   /**
     * Fetches the user's locale from Facebook using Profile API. Returns user's
-    *   language and country cod
+    *   language and country code
     * @function _getLocale
     * @param {Object} userId - Facebook user ID
     * @return {Object} array of user language and Facebook region

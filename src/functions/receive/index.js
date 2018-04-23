@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 // Function for sending facebook DMs
-import receive from './receive';
 
 const config = {
   oauth: {
@@ -20,28 +19,45 @@ const config = {
   },
 };
 
-/**
- * Webhook handler for incoming Facebook DMs
- * @function facebookDMWebhook
- * @param {Object} event - AWS Lambda event object
- * @param {Object} context - AWS Lambda context object
- * @param {Function} callback - Callback
- * @return {Object} callack - reponse callback
- */
-module.exports.facebookDMWebhook = (event, context, callback) => {
-  if (event.method === 'GET') {
-    if (event.query['hub.verify_token'] ===
-      process.env.FACEBOOK_VALIDATION_TOKEN && event.query['hub.challenge']) {
-      return callback(null, parseInt(event.query['hub.challenge']));
-    } else {
-      return callback('Invalid token');
-    }
-  } else if (event.method === 'POST') {
-    receive(config).process(event)
-      .then(callback(null))
-      .catch((err) => {
-        console.log('error is here in post: ' + err);
-        callback(null);
-      });
+  const response = {
+    statusCode: 200,
+    headers: {},
+    body: JSON.stringify({}),
+  };
+
+  const tokenError = {
+    statusCode: 500,
+    headers: {},
+    body: JSON.stringify({'Message': 'Invalid token'}),
+  };
+
+  /*
+  const error = {
+    statusCode: 500,
+    headers: {},
+    body: JSON.stringify({'Message': 'Server error'}),
+  };*/
+
+  export default (event, context, callback) => {
+    console.log('Lambda handler loading');
+    console.log('Incoming payload: ', event.body);
+
+    if (event.method === 'GET') {
+      if (event.query['hub.verify_token'] ===
+        process.env.FACEBOOK_VALIDATION_TOKEN && event.query['hub.challenge']) {
+       return callback(null, parseInt(event.query['hub.challenge']));
+      } else {
+        return callback(null, tokenError);
+      }
+    } else if (event.method === 'POST') {
+      console.log(event.body);
+      console.log(config);
+      callback(null, response);
+        /* facebook.sendReply(event.body)
+          .then((data) => callback(null, response))
+          .catch((err) => {
+            console.log('Error in request: ' + err.message);
+            callback(null, error);
+          });*/
     }
   };
