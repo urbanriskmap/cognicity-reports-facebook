@@ -42,30 +42,40 @@ export default class Facebook {
     * @method _prepareRequest
     * @private
     * @param {String} userId - User or Telegram chat ID for reply
-    * @param {String} message - Message to send
-    * @return {String} - URI for request
+    * @param {String} messageText - Message to send
+    * @return {Object} - Request object
   **/
-  _prepareRequest(userId, message) {
-    return (this.config.TELEGRAM_ENDPOINT +
-            this.config.BOT_TOKEN +
-            '/sendmessage?text=' +
-            message +
-            '&chat_id=' +
-            userId
-          );
+  _prepareRequest(userId, messageText) {
+    const body = {
+      recipient: {
+        id: userId,
+      },
+      message: {
+          text: messageText,
+      },
+    };
+
+    const request = this.config.FACEBOOK_ENDPOINT +
+      '/?access_token=' +
+      this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
+
+
+    return ({request: request, body: body});
   }
 
   /**
-    * Send Telegram message
-    * @method _prepareRequest
+    * Send Facebook message
+    * @method _sendMessage
     * @private
-    * @param {String} requestString - Telegram call
+    * @param {Object} properties - Properties of request
+    * @param {String} request - Request string
+    * @param {Object} body - Request body
     * @return {Promise} - Result of request
   **/
-  _sendMessage(requestString) {
+  _sendMessage(properties) {
     return new Promise((resolve, reject) => {
-      console.log('Sending request to telegram: ' + requestString);
-      this.axios.post(requestString, {})
+      console.log('Sending request to facebook: ' + properties.request);
+      this.axios.post(properties.request, properties.body)
         .then((response) => resolve(response))
         .catch((err) => reject(err));
     });
@@ -88,21 +98,20 @@ export default class Facebook {
     });
   }
 
-   // TODO - document telegramMessage properties
   /**
-    * Respond telegram to user based on input
+    * Respond to Facebook to user based on input
     * @method sendReply
-    * @param {Object} telegramMessage - Telegram requets object
+    * @param {Object} facebookMessage - Facebook requets object
     * @return {Promise} - Result of request
   **/
-  sendReply(telegramMessage) {
+  sendReply(facebookMessage) {
     return new Promise((resolve, reject) => {
       const properties = {
-        userId: String(telegramMessage.chat.id),
+        userId: String(facebookMessage.sender.id),
         language: this.config.DEFAULT_LANGUAGE,
-        network: 'telegram',
+        network: 'facebook',
       };
-      if (this._classify(telegramMessage.text) === 'flood') {
+      if (this._classify(facebookMessage.message.text) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareRequest(properties.userId, msg);
