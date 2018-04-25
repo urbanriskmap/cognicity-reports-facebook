@@ -72,7 +72,7 @@ export default class Facebook {
             buttons: [
               {
                 type: 'web_url',
-                title: Submit report,
+                title: 'Submit report',
                 url: properties.message.link,
                 payload: '/flood',
               },
