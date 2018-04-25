@@ -173,7 +173,7 @@ export default class Facebook {
       if (this._classify(facebookMessage) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
-          const response = this._prepareRequest(
+          const response = this._prepareCardResponse(
             {
               userId: properties.userId,
               messageText: msg,
