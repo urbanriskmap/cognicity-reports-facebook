@@ -55,7 +55,7 @@ export default class Facebook {
     * @private
     * @param {Object} properties - Request parameters
     * @param {String} properties.userId - User or Telegram chat ID for reply
-    * @param {String} properties.message - Message object from cognicity-bot-core
+    * @param {String} properties.message - Bot lib message object
     * @return {Object} - Request object
   **/
   _prepareCardResponse(properties) {
@@ -77,7 +77,7 @@ export default class Facebook {
               },
             ],
           },
-        },      
+        },
       },
     };
 
@@ -95,7 +95,7 @@ export default class Facebook {
     * @private
     * @param {Object} properties - Properties.request
     * @param {String} properties.userId - User or Telegram chat ID for reply
-    * @param {String} properties.message - Message object from cognicity-bot-core
+    * @param {String} properties.message - Bot lib message object
     * @return {Object} - Request object
   **/
   _prepareDefaultResponse(properties) {
@@ -117,7 +117,7 @@ export default class Facebook {
               },
               {
                 type: 'web_url',
-                url: config.MAP_URL,
+                url: this.config.MAP_URL,
                 title: 'View live flood reports',
               },
             ],
