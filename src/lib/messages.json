@@ -2,7 +2,7 @@
     "en": {
       "texts": {
         "default": "RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
-        "card": "Please report using this one-time link ",
+        "card": "Please report using this one-time link.",
         "thanks": "Thank you for your report. You can access it using this link "
       }
     },

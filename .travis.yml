@@ -16,4 +16,12 @@ deploy:
     handler_name: "default"
     on:
       branch: refactor 
-
+  - provider: lambda
+    function_name: "cognicity-facebook-reply-dev"
+    region: $AWS_REGION
+    role: $AWS_LAMBDA_ROLE
+    runtime: "nodejs8.10"
+    module_name: "bin/functions/send"
+    handler_name: "default"
+    on:
+      branch: refactor

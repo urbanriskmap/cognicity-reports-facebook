@@ -1,49 +1,32 @@
-import facebook from '../../lib/facebook/';
-import messages from '../../lib/facebook/messages';
-import request from 'request';
+import config from '../../config';
+import Facebook from '../../lib/facebook';
 
-const config = {
-  oauth: {
-    validation_token: process.env.FACEBOOK_VALIDATION_TOKEN,
-    page_access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
-  },
-  app: {
-    default_lang: process.env.DEFAULT_LANG,
-    facebook_endpoint: 'https://graph.facebook.com/v2.6/me/messages',
-  },
-  server: {
-    card_endpoint: process.env.FRONTEND_CARD_PATH,
-    card_api: 'https://3m3l15fwsf.execute-api.us-west-2.amazonaws.com/prod/cards',
-    api_key: process.env.SERVER_API_KEY,
-  },
+const response = {
+  statusCode: 200,
+  headers: {},
+  body: JSON.stringify({}),
 };
 
-module.exports.facebookReply = (event, context, callback) => {
-  // This module listens in to SNS Facebook topic and reads published messages
-  let message = JSON.parse(event.Records[0].Sns.Message);
-  console.log('Message received from SNS topic: ' + message);
+const errorResponse = {
+  statusCode: 500,
+  headers: {},
+  body: JSON.stringify({'Message': 'Server error'}),
+};
 
-  request({
-      uri: 'https://graph.facebook.com/v2.6/' + message.username +
-      '?fields=locale&access_token=' + process.env.PAGE_ACCESS_TOKEN,
-      method: 'GET',
-    }, function(error, response, body) {
-      if (!error && response.statuscode == 200) {
-        let [lang, userLocale] = body.locale.split('_');
+export default (event, context, callback) => {
+  console.log('Lambda handler loading');
+  console.log('Event', event);
+  console.log('Method', event.httpMethod);
 
-        if (userLocale == 'IN') {
-          lang = 'en';
-        }
-        // Prepare message
-        let msg = messages(config).thanks(lang, message.implementation_region,
-                                          message.username, message.report_id);
-        // Send message to user
-        facebook(config).sendMessage(msg)
-          .then((response) =>
-                console.log('Successfully sent message with id %s to '
-                + 'recipient %s', response.message_id, response.recipient_id))
-          .catch((err) => console.log('Message failed to send over Send API',
-                                      err.code, err.type, err.message));
-      }
+  const body = JSON.parse(event.body);
+
+  const facebook = new Facebook(config);
+
+  facebook.sendThanks(body).then((res) => {
+    console.log('Thanks message sent');
+    callback(null, response);
+  }).catch((err) => {
+    console.log('Error sending Facebook message. ' + err.message);
+    callback(null, errorResponse);
   });
 };
