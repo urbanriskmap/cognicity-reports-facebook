@@ -51,8 +51,49 @@ export default class Facebook {
         id: userId,
       },
       message: {
-          text: messageText,
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "text": "hello world"
+        }
+      }
+    }
+    };
+
+    const request = this.config.FACEBOOK_ENDPOINT +
+      '/?access_token=' +
+      this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
+
+
+    return ({request: request, body: body});
+  }
+
+  _prepareDefaultResponse(properties) {
+    const body = {
+      recipient: {
+        id: userId,
       },
+      message: {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "button",
+            "text": messageText,
+            "buttons": [
+              { 
+                "type": "postback", 
+                "title": "Report flooding",
+                "payload": "/flood"
+              },
+              {
+                "type": "web_url",
+                "url": "https://riskmap.us/broward",
+                "title": "View live reports",
+              }
+            ]
+          }
+        }
+      }
     };
 
     const request = this.config.FACEBOOK_ENDPOINT +
@@ -120,7 +161,7 @@ export default class Facebook {
       } else {
         this.bot.default(properties)
         .then((msg) => {
-          const response = this._prepareRequest(properties.userId, msg);
+          const response = this._prepareDefaultResponse(properties.userId, msg);
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
       }
