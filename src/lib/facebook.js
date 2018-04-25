@@ -169,7 +169,11 @@ export default class Facebook {
       } else {
         this.bot.default(properties)
         .then((msg) => {
-          const response = this._prepareDefaultResponse({userId: properties.userId, messageText: msg});
+          const response = this._prepareDefaultResponse(
+            {
+              userId: properties.userId,
+              messageText: msg,
+            });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
       }
