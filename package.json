@@ -8,7 +8,7 @@
     "mocha": "nyc mocha --require babel-core/register src/test/index",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test": "npm run lint && npm run mocha",
-    "build": "./node_modules/.bin/babel src -d bin"
+    "build": "./node_modules/.bin/babel src -d bin && cp src/lib/messages.json bin/lib/messages.json"
   },
   "keywords": [
     "bot",
