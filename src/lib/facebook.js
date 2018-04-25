@@ -203,7 +203,7 @@ export default class Facebook {
     return new Promise((resolve, reject) => {
       this.bot.thanks(body)
         .then((msg) => {
-          const response = this._prepareCardResponse(body.userId, msg);
+          const response = this._prepareThanksResponse(body.userId, msg);
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
     });
