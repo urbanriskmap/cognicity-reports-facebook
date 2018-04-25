@@ -68,10 +68,11 @@ export default class Facebook {
           type: 'template',
           payload: {
             template_type: 'button',
+            text: properties.message.text,
             buttons: [
               {
                 type: 'web_url',
-                title: properties.message.text,
+                title: Submit report,
                 url: properties.message.link,
                 payload: '/flood',
               },
