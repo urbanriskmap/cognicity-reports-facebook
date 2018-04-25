@@ -50,20 +50,22 @@ export default class Facebook {
   }
 
   /**
-    * Prepares Telegram message request object
-    * @method _prepareRequest
+    * Prepares Facebook card message request object
+    * @method _prepareCardResponse
     * @private
+    * @param {Object} properties - Request parameters
     * @param {String} userId - User or Telegram chat ID for reply
     * @param {String} messageText - Message to send
+    * @param {String} cardLink - Card link to send
     * @return {Object} - Request object
   **/
-  _prepareRequest(userId, messageText) {
+  _prepareCardResponse(properties) {
     const body = {
       recipient: {
-        id: userId,
+        id: properties.userId,
       },
       message: {
-        text: "hello world"
+        text: properties.messageText,
       },
     };
 
@@ -90,21 +92,21 @@ export default class Facebook {
         id: properties.userId,
       },
       message: {
-        'attachment': {
-          'type': 'template',
-          'payload': {
-            'template_type': 'button',
-            'text': properties.messageText,
-            'buttons': [
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'button',
+            text: properties.messageText,
+            buttons: [
               {
-                'type': 'postback',
-                'title': 'Report flooding',
-                'payload': '/flood',
+                type: 'postback',
+                title: 'Report flooding',
+                payload: '/flood',
               },
               {
-                'type': 'web_url',
-                'url': 'https://riskmap.us/broward',
-                'title': 'View live reports',
+                type: 'web_url',
+                url: 'https://riskmap.us/broward',
+                title: 'View live reports',
               },
             ],
           },
@@ -149,7 +151,7 @@ export default class Facebook {
     return new Promise((resolve, reject) => {
       this.bot.thanks(body)
         .then((msg) => {
-          const response = this._prepareRequest(body.userId, msg);
+          const response = this._prepareCardResponse(body.userId, msg);
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
     });
@@ -171,7 +173,11 @@ export default class Facebook {
       if (this._classify(facebookMessage) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
-          const response = this._prepareRequest(properties.userId, msg);
+          const response = this._prepareRequest(
+            {
+              userId: properties.userId,
+              messageText: msg,
+            });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
       } else {
