@@ -5,13 +5,13 @@ import messages from './messages.json';
 /**
  * Class for sending CogniCity messages via Facebook
  * @class Facebook
- * @param {Object} config - facebook parameters
+ * @param {Object} config - Facebook parameters
  * @return {Object} Function methods
  **/
 export default class Facebook {
   /**
    * constructor for class Facebook
-   * @param {Object} config - facebook parameters
+   * @param {Object} config - Facebook parameters
    */
   constructor(config) {
     this.config = config;
@@ -24,8 +24,8 @@ export default class Facebook {
    * Method to filter text by keyword
    * @method _classify
    * @private
-   * @param {Object} message - facebook message object
-   * @return {String} - keyword or null
+   * @param {Object} message - Facebook message object
+   * @return {String} - Keyword or null
    */
   _classify(message) {
     // Seet search expression
@@ -172,7 +172,7 @@ export default class Facebook {
         language: this.config.DEFAULT_LANGUAGE,
         network: 'facebook',
       };
-      if (this._classify(facebookMessage.message) === 'flood') {
+      if (this._classify(facebookMessage) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareRequest(properties.userId, msg);
