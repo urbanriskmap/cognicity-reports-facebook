@@ -54,9 +54,8 @@ export default class Facebook {
     * @method _prepareCardResponse
     * @private
     * @param {Object} properties - Request parameters
-    * @param {String} userId - User or Telegram chat ID for reply
-    * @param {String} messageText - Message to send
-    * @param {String} cardLink - Card link to send
+    * @param {String} properties.userId - User or Telegram chat ID for reply
+    * @param {String} properties.message - Message object from cognicity-bot-core
     * @return {Object} - Request object
   **/
   _prepareCardResponse(properties) {
@@ -65,7 +64,20 @@ export default class Facebook {
         id: properties.userId,
       },
       message: {
-        text: properties.messageText,
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'button',
+            buttons: [
+              {
+                type: 'web_url',
+                title: properties.message.text,
+                url: properties.message.link,
+                payload: '/flood',
+              },
+            ],
+          },
+        },      
       },
     };
 
@@ -83,7 +95,7 @@ export default class Facebook {
     * @private
     * @param {Object} properties - Properties.request
     * @param {String} properties.userId - User or Telegram chat ID for reply
-    * @param {String} properties.messageText - Message to send
+    * @param {String} properties.message - Message object from cognicity-bot-core
     * @return {Object} - Request object
   **/
   _prepareDefaultResponse(properties) {
@@ -96,7 +108,7 @@ export default class Facebook {
           type: 'template',
           payload: {
             template_type: 'button',
-            text: properties.messageText,
+            text: properties.message.text,
             buttons: [
               {
                 type: 'postback',
@@ -105,8 +117,8 @@ export default class Facebook {
               },
               {
                 type: 'web_url',
-                url: 'https://riskmap.us/broward',
-                title: 'View live reports',
+                url: config.MAP_URL,
+                title: 'View live flood reports',
               },
             ],
           },
@@ -176,7 +188,7 @@ export default class Facebook {
           const response = this._prepareCardResponse(
             {
               userId: properties.userId,
-              messageText: msg,
+              message: msg,
             });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
@@ -186,7 +198,7 @@ export default class Facebook {
           const response = this._prepareDefaultResponse(
             {
               userId: properties.userId,
-              messageText: msg,
+              message: msg,
             });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));

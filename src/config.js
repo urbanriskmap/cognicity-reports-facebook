@@ -9,7 +9,7 @@ export default {
     FACEBOOK_ENDPOINT: process.env.FACEBOOK_ENDPOINT || 'https://graph.facebook.com/v2.6/me/messages',
     FACEBOOK_PAGE_ACCESS_TOKEN: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
     FACEBOOK_VALIDATION_TOKEN: process.env.FACEBOOK_VALIDAION_TOKEN,
-    MAP_URL: process.env.MAP_URL || 'https://riskmap.us/',
+    MAP_URL: process.env.MAP_URL || 'https://dev.riskmap.us/',
     NETWORK_NAME: 'facebook',
     TELEGRAM_ENDPOINT: process.env.TELEGRAM_ENDPOINT || 'https://api.telegram.org/bot',
 };
