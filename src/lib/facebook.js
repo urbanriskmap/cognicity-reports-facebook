@@ -51,13 +51,13 @@ export default class Facebook {
         id: userId,
       },
       message: {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "text": "hello world"
-        }
-      }
-    }
+        'attachment': {
+          'type': 'template',
+          'payload': {
+            'text': 'hello world',
+        },
+      },
+    },
     };
 
     const request = this.config.FACEBOOK_ENDPOINT +
@@ -68,38 +68,46 @@ export default class Facebook {
     return ({request: request, body: body});
   }
 
+    /**
+    * Prepares default Facebook message request object
+    * @method _prepareDefaultResponse
+    * @private
+    * @param {Object} properties - Properties.request
+    * @param {String} properties.userId - User or Telegram chat ID for reply
+    * @param {String} properties.messageText - Message to send
+    * @return {Object} - Request object
+  **/
   _prepareDefaultResponse(properties) {
     const body = {
       recipient: {
-        id: userId,
+        id: properties.userId,
       },
       message: {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "button",
-            "text": messageText,
-            "buttons": [
-              { 
-                "type": "postback", 
-                "title": "Report flooding",
-                "payload": "/flood"
+        'attachment': {
+          'type': 'template',
+          'payload': {
+            'template_type': 'button',
+            'text': properties.messageText,
+            'buttons': [
+              {
+                'type': 'postback',
+                'title': 'Report flooding',
+                'payload': '/flood',
               },
               {
-                "type": "web_url",
-                "url": "https://riskmap.us/broward",
-                "title": "View live reports",
-              }
-            ]
-          }
-        }
-      }
+                'type': 'web_url',
+                'url': 'https://riskmap.us/broward',
+                'title': 'View live reports',
+              },
+            ],
+          },
+        },
+      },
     };
 
     const request = this.config.FACEBOOK_ENDPOINT +
       '/?access_token=' +
       this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
-
 
     return ({request: request, body: body});
   }
@@ -161,7 +169,7 @@ export default class Facebook {
       } else {
         this.bot.default(properties)
         .then((msg) => {
-          const response = this._prepareDefaultResponse(properties.userId, msg);
+          const response = this._prepareDefaultResponse({userId: properties.userId, messageText: msg});
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
       }
