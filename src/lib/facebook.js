@@ -24,14 +24,26 @@ export default class Facebook {
    * Method to filter text by keyword
    * @method _classify
    * @private
-   * @param {String} text - message from user
+   * @param {Object} message - facebook message object
    * @return {String} - keyword or null
    */
-  _classify(text) {
-    // filter the message by keyword
+  _classify(message) {
+    // Seet search expression
     const re = new RegExp(/\/flood/gi);
-    if (re.exec(text) !== null) {
-      return 'flood';
+    // Determine whether this was a raw text or button response
+    if (message.message.text){
+      // filter the message by keyword
+      if (re.exec(message.message.text) !== null) {
+        return 'flood';
+      } else {
+        return null;
+      }
+    } else if (message.postback.payload){
+      if (re.exec(message.postback.payload) !== null) {
+        return 'flood';
+      } else {
+        return null;
+      }    
     } else {
       return null;
     }
@@ -160,7 +172,7 @@ export default class Facebook {
         language: this.config.DEFAULT_LANGUAGE,
         network: 'facebook',
       };
-      if (this._classify(facebookMessage.message.text) === 'flood') {
+      if (this._classify(facebookMessage.message) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareRequest(properties.userId, msg);
