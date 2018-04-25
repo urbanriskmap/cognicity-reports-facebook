@@ -31,19 +31,19 @@ export default class Facebook {
     // Seet search expression
     const re = new RegExp(/\/flood/gi);
     // Determine whether this was a raw text or button response
-    if (message.message && message.message.text){
+    if (message.message && message.message.text) {
       // filter the message by keyword
       if (re.exec(message.message.text) !== null) {
         return 'flood';
       } else {
         return null;
       }
-    } else if (message.postback && message.postback.payload){
+    } else if (message.postback && message.postback.payload) {
       if (re.exec(message.postback.payload) !== null) {
         return 'flood';
       } else {
         return null;
-      }    
+      }
     } else {
       return null;
     }
@@ -136,7 +136,7 @@ export default class Facebook {
   _sendMessage(properties) {
     return new Promise((resolve, reject) => {
       console.log('Sending request to facebook: ' + properties.request);
-      console.log('Request body: ' +  + properties.body);
+      console.log('Request body: ' + properties.body);
       this.axios.post(properties.request, properties.body)
         .then((response) => resolve(response))
         .catch((err) => reject(err));
