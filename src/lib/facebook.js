@@ -63,13 +63,8 @@ export default class Facebook {
         id: userId,
       },
       message: {
-        'attachment': {
-          'type': 'template',
-          'payload': {
-            'text': 'hello world',
-        },
+        text: "hello world"
       },
-    },
     };
 
     const request = this.config.FACEBOOK_ENDPOINT +
