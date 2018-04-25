@@ -1,5 +1,5 @@
 import config from '../../config';
-import Facebook from '../../facebook';
+import Facebook from '../../lib/facebook';
 
   const response = {
     statusCode: 200,
