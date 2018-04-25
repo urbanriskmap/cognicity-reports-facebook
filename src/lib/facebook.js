@@ -74,7 +74,6 @@ export default class Facebook {
                 type: 'web_url',
                 title: 'Submit report',
                 url: properties.message.link,
-                payload: '/flood',
               },
             ],
           },
@@ -89,6 +88,46 @@ export default class Facebook {
 
     return ({request: request, body: body});
   }
+
+    /**
+    * Prepares Facebook card message request object
+    * @method _prepareCardResponse
+    * @private
+    * @param {Object} properties - Request parameters
+    * @param {String} properties.userId - User or Telegram chat ID for reply
+    * @param {String} properties.message - Bot lib message object
+    * @return {Object} - Request object
+  **/
+ _prepareThanksResponse(properties) {
+  const body = {
+    recipient: {
+      id: properties.userId,
+    },
+    message: {
+      attachment: {
+        type: 'template',
+        payload: {
+          template_type: 'button',
+          text: properties.message.text,
+          buttons: [
+            {
+              type: 'web_url',
+              title: 'View your report',
+              url: properties.message.link,
+            },
+          ],
+        },
+      },
+    },
+  };
+
+  const request = this.config.FACEBOOK_ENDPOINT +
+    '/?access_token=' +
+    this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
+
+
+  return ({request: request, body: body});
+}
 
     /**
     * Prepares default Facebook message request object
@@ -119,7 +158,7 @@ export default class Facebook {
               {
                 type: 'web_url',
                 url: this.config.MAP_URL,
-                title: 'View live flood reports',
+                title: 'View live reports',
               },
             ],
           },
