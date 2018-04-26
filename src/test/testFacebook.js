@@ -11,24 +11,16 @@ export default function() {
     const facebook = new Facebook(config);
     const oldFacebookBot = facebook.bot;
     const oldAxios = facebook.axios;
+    const oldLocale = facebook.locale;
     let axiosError = false;
     let botError = false;
+    let localeError = false;
 
     before(function() {
       const mockThanks = function(properties) {
         return new Promise((resolve, reject) => {
           if (botError === false) {
             resolve({text: 'mocked thanks message', link: ' link'});
-          } else {
-            reject(new Error(`bot error`));
-          }
-        });
-      };
-
-      const mockDefault = function(properties) {
-        return new Promise((resolve, reject) => {
-          if (botError === false) {
-            resolve({text: 'mocked default message'});
           } else {
             reject(new Error(`bot error`));
           }
@@ -55,14 +47,27 @@ export default function() {
         });
       };
 
+      const mockLocale = function(properties, body) {
+        return new Promise((resolve, reject) => {
+          if (localeError === false) {
+            resolve('id');
+          } else {
+            resolve(config.DEFAULT_LANGUAGE);
+          }
+        });
+      };
+
       facebook.bot = {
-        default: mockDefault,
         card: mockCard,
         thanks: mockThanks,
       };
 
       facebook.axios = {
         post: mockAxios,
+      };
+
+      facebook.locale = {
+        get: mockLocale,
       };
     });
 
@@ -81,12 +86,9 @@ export default function() {
       facebook.sendThanks(body)
         .then((res) => {
           test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token='+config.FACEBOOK_PAGE_ACCESS_TOKEN);
-          test.value(res.body).is({'recipient': {'id': '1'},
-          'message': {'attachment': {'type': 'template',
-          'payload': {'template_type': 'button',
-              'text': 'mocked thanks message',
-          'buttons': [{'type': 'web_url', 'title':
-              'View your report', 'url': ' link'}]}}}});
+          test.value(res.body.recipient.id).is('1');
+          test.value(res.body.message.attachment.payload.text)
+              .is('mocked thanks message');
           done();
         });
     });
@@ -163,7 +165,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
-                .is('mocked default message');
+                .is('mocked card message');
             done();
           });
       });
@@ -229,7 +231,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
-                .is('mocked default message');
+                .is('mocked card message');
             done();
             });
         });
@@ -259,60 +261,6 @@ export default function() {
         .catch((err) => {
           test.value(err.message).is('Axios error');
           axiosError = false;
-          done();
-        });
-    });
-
-    it('Can get default messsage', function(done) {
-        const payload = {
-            'object': 'page',
-            'entry': [
-                {
-                  'id': '1',
-                  'time': 1524684657816,
-                  'messaging': [
-                      {
-                          'sender': {'id': '1'},
-                          'recipient': {'id': '2'},
-                          'timestamp': 1524684657462,
-                          'message': {
-                              'mid': 'mid.123', 'seq': 3068, 'text': 'spam',
-                          },
-                      },
-                  ],
-              },
-          ]};
-      facebook.sendReply(payload.entry[0].messaging[0])
-        .then((res) => {
-          test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token='+config.FACEBOOK_PAGE_ACCESS_TOKEN);
-          done();
-        });
-    });
-
-
-    it('Can catch error getting default messsage', function(done) {
-        const payload = {
-            'object': 'page',
-            'entry': [
-                {
-                  'id': '1',
-                  'time': 1524684657816,
-                  'messaging': [
-                      {
-                          'sender': {'id': '1'},
-                          'recipient': {'id': '2'},
-                          'timestamp': 1524684657462,
-                          'message': {
-                              'mid': 'mid.123', 'seq': 3068, 'text': '/flood',
-                          },
-                      },
-                  ],
-              },
-          ]};
-      botError = true;
-      facebook.sendReply(payload.entry[0].messaging[0])
-        .catch((err) => {
-          test.value(err.message).is('bot error');
           done();
         });
     });
@@ -348,6 +296,7 @@ export default function() {
     after(function() {
       facebook.bot = oldFacebookBot;
       facebook.axios = oldAxios;
+      facebook.locale = oldLocale;
     });
   });
 }
