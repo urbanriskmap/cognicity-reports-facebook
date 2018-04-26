@@ -15,8 +15,6 @@ const errorResponse = {
 
 export default (event, context, callback) => {
   console.log('Lambda handler loading');
-  console.log('Event', event);
-  console.log('Method', event.httpMethod);
 
   const body = JSON.parse(event.body);
 

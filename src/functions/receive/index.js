@@ -22,8 +22,6 @@ import Facebook from '../../lib/facebook';
 
   export default (event, context, callback) => {
     console.log('Lambda handler loading');
-    console.log('Event', event);
-    console.log('Method', event.httpMethod);
     if (event.httpMethod === 'GET') {
       console.log('GET request, indicates possible Facebook validation');
       if (event.queryStringParameters['hub.verify_token'] ===
@@ -39,11 +37,10 @@ import Facebook from '../../lib/facebook';
         return callback(null, tokenError);
       }
     } else if (event.httpMethod === 'POST') {
+      console.log('POST request, indicates user input');
+
       const facebook = new Facebook(config);
 
-
-      console.log(event.body);
-      console.log(config);
       callback(null, response);
       const payload = JSON.parse(event.body);
       facebook.sendReply(payload.entry[0].messaging[0])

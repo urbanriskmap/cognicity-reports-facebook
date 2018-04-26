@@ -127,8 +127,7 @@ export default class Facebook {
   **/
   _sendMessage(properties) {
     return new Promise((resolve, reject) => {
-      console.log('Sending request to facebook: ' + properties.request);
-      console.log('Request body: ' + JSON.stringify(properties.body));
+      console.log('Sending request to facebook.');
       this.axios.post(properties.request, properties.body)
         .then((response) => resolve(response))
         .catch((err) => reject(err));
