@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Bot from '@urbanriskmap/cognicity-bot-core';
 import messages from './messages.json';
+import buttons from './buttons.json';
 import Locale from './locale';
 
 /**
@@ -29,6 +30,7 @@ export default class Facebook {
     * @param {Object} properties - Request parameters
     * @param {String} properties.userId - User or Telegram chat ID for reply
     * @param {String} properties.message - Bot lib message object
+    * @param {String} properties.language - User locale (e.g. 'en')
     * @return {Object} - Request object
   **/
   _prepareCardResponse(properties) {
@@ -45,13 +47,13 @@ export default class Facebook {
             buttons: [
               {
                 type: 'web_url',
-                title: 'Report flooding',
+                title: buttons[properties.language].report,
                 url: properties.message.link,
               },
               {
                 type: 'web_url',
                 url: this.config.MAP_URL,
-                title: 'View live flood map',
+                title: buttons[properties.language].map,
               },
             ],
           },
@@ -75,6 +77,7 @@ export default class Facebook {
     * @param {Object} properties.thanks - Thanks reply object from bot
     * @param {Object} properties.card - New card object from bot
     * @param {String} properites.userId - User ID
+    * @param {String} properties.language - User locale (e.g. 'en')
     * @return {Object} - Request object
   **/
  _prepareThanksResponse(properties) {
@@ -91,12 +94,12 @@ export default class Facebook {
           buttons: [
             {
               type: 'web_url',
-              title: 'View your report',
+              title: buttons[properties.language].view,
               url: properties.thanks.link,
             },
             {
               type: 'web_url',
-              title: 'Add another report',
+              title: buttons[properties.language].add,
               url: properties.card.link,
             },
           ],
@@ -153,6 +156,7 @@ export default class Facebook {
             thanks: values[0],
             card: values[1],
             userId: body.userId,
+            language: body.language,
           };
           const response = this._prepareThanksResponse(properties);
           resolve(this._sendMessage(response));
@@ -181,6 +185,7 @@ export default class Facebook {
               {
                 userId: properties.userId,
                 message: msg,
+                language: locale,
               });
             resolve(this._sendMessage(response));
           }).catch((err) => reject(err));

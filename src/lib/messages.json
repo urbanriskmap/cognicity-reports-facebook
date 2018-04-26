@@ -9,8 +9,8 @@
     "id": {
       "texts": {
         "default": "[ID] RiskMap bot helps you report flooding in realtime. Send /flood to report. In life-threatening situations call 911.",
-        "card": "[ID] Please report using this one-time link ",
-        "thanks": "[ID] Thank you for your report. You can access it using this link "
+        "card": "[ID] RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
+        "thanks": "[ID] Thank you for your report. Click to see your report on the map."
       }
     }
   }

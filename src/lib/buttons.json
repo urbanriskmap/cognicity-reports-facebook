@@ -1,0 +1,18 @@
+{
+    "en": {
+      "buttons": {
+        "report": "Report flooding",
+        "map": "View live reports",
+        "view": "View your report",
+        "add": "Add another report"
+      }
+    },
+    "id": {
+        "buttons": {
+            "report": "Report flooding",
+            "map": "View live reports",
+            "view": "View your report",
+            "add": "Add another report"
+        }
+    }
+}
