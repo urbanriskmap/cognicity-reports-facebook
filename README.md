@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook.svg?branch=dev)](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook) [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-reports-facebook/badge.svg?branch=refactor)](https://coveralls.io/github/urbanriskmap/cognicity-reports-facebook?branch=refactor) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) 
 
 # cognicity-reports-facebook
-This module deploys serverless lambdas that, after user initiates a conversation via Facebook messenger, used the cognicity-bot-core module to fetch a report card from a CogniCity server and sends it to the user.
+This module deploys serverless lambdas that, after user initiates a conversation via Facebook messenger, uses the cognicity-bot-core module to fetch a report card from a CogniCity server and sends it to the user.
 
 ### Install
 `npm install`
