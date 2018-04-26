@@ -1,13 +1,13 @@
 {
-    "en": {
+    "id": {
       "text": {
         "report": "Report flooding",
-        "map": "View live reports",
+        "map": "View live flood map",
         "view": "View your report",
         "add": "Add another report"
       }
     },
-    "id": {
+    "en": {
         "text": {
             "report": "[ID] Report flooding",
             "map": "[ID] View live reports",
