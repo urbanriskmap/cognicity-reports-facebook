@@ -231,7 +231,7 @@ export default class Facebook {
         language: this.config.DEFAULT_LANGUAGE,
         network: 'facebook',
       };
-      /*if (this._classify(facebookMessage) === 'flood') {
+      /* if (this._classify(facebookMessage) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareCardResponse(

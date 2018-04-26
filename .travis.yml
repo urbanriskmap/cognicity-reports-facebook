@@ -1,7 +1,8 @@
 language: node_js
 node_js: '8.10'
 
-script: npm run test && npm run coverage
+#script: npm run test && npm run coverage
+script: npm run lint
 
 before_deploy:
   - npm run build
