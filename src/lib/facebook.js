@@ -114,12 +114,12 @@ export default class Facebook {
         type: 'template',
         payload: {
           template_type: 'button',
-          text: properties.thanks.message.text,
+          text: properties.thanks.text,
           buttons: [
             {
               type: 'web_url',
               title: 'View your report',
-              url: properties.thanks.message.link,
+              url: properties.thanks.link,
             },
             {
               type: 'web_url',
