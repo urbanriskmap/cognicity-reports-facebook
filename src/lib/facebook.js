@@ -231,7 +231,7 @@ export default class Facebook {
         language: this.config.DEFAULT_LANGUAGE,
         network: 'facebook',
       };
-      if (this._classify(facebookMessage) === 'flood') {
+      /*if (this._classify(facebookMessage) === 'flood') {
         this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareCardResponse(
@@ -241,17 +241,17 @@ export default class Facebook {
             });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
-      } else {
+      } else {*/
         this.bot.default(properties)
         .then((msg) => {
-          const response = this._prepareDefaultResponse(
+          const response = this._prepareCardResponse(
             {
               userId: properties.userId,
               message: msg,
             });
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
-      }
+     // }
     });
   }
 }
