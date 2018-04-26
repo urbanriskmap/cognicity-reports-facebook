@@ -15,7 +15,6 @@ This module deploys serverless lambdas that, after user initiates a conversation
 * On successful deployment, you'll get a secure URL for the webhook's GET method. Now complete Step 2 in the [Quick Start Guide](https://developers.facebook.com/docs/messenger-platform/guides/setup). Set this secure URL as 'Callback URL' and `VALIDATIONTOKEN` in the 'Verify Token' fields. Select 'messages' and 'messaging_postbacks' to enable two-way communication. Verifying and saving this enables the webhooks for the app.
 * Subscribe your app to your page as explained [here](https://developers.facebook.com/docs/messenger-platform/guides/setup#subscribe_app)
 * Send a text to your Facebook messenger bot to test if it is up and running!
-* Read `Misc Notes` section to assist in configuration
 
 ### Deployment
 Adjust .travis.yml to deploy via Travis as need.
