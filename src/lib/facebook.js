@@ -156,9 +156,9 @@ export default class Facebook {
             text: properties.message.text,
             buttons: [
               {
-                type: 'postback',
+                type: 'web_url',
                 title: 'Report flooding',
-                payload: '/flood',
+                url: properties.message.link,
               },
               {
                 type: 'web_url',
@@ -202,19 +202,25 @@ export default class Facebook {
     * Prepare and send a thank you message to user with report ID
     * @method sendThanks
     * @param {Object} body - HTTP body request object
+    * @param {number} body.reportId - report ID
+    * @param {String} body.instanceRegionCode - region code of report
+    * @param {String} body.language - language of report
+    * @param {String} body.username - user network identifier
+    * @param {String} body.network - social network
     * @return {Promise} - Result of request
   **/
   sendThanks(body) {
     return new Promise((resolve, reject) => {
-      this.bot.thanks(body)
-        .then((msg) => {
+      Promise.all([this.bot.thanks(body), this.bot.card(body)])
+        .then((values) => {
+          console.log(values);
           const response = this._prepareThanksResponse(
             {
             userId: body.userId,
-            message: msg,
+            message: values[0],
             });
           resolve(this._sendMessage(response));
-        }).catch((err) => reject(err));
+        });
     });
   }
 
@@ -242,7 +248,7 @@ export default class Facebook {
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
       } else {*/
-        this.bot.default(properties)
+        this.bot.card(properties)
         .then((msg) => {
           const response = this._prepareCardResponse(
             {
