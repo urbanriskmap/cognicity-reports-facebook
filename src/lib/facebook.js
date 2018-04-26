@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Bot from '@urbanriskmap/cognicity-bot-core';
 import messages from './messages.json';
+import Locale from './locale';
 
 /**
  * Class for sending CogniCity messages via Facebook
@@ -17,6 +18,7 @@ export default class Facebook {
     this.config = config;
     this.config.MESSAGES = messages;
     this.bot = new Bot(this.config);
+    this.locale = new Locale(this.config);
     this.axios = axios;
   }
 
@@ -166,6 +168,8 @@ export default class Facebook {
   **/
   sendReply(facebookMessage) {
     return new Promise((resolve, reject) => {
+      this.locale.get(String(facebookMessage.sender.id));
+
       const properties = {
         userId: String(facebookMessage.sender.id),
         language: this.config.DEFAULT_LANGUAGE,
