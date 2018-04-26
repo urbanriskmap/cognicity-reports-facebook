@@ -47,13 +47,13 @@ export default class Facebook {
             buttons: [
               {
                 type: 'web_url',
-                title: buttons[properties.language].report,
+                title: buttons[properties.language].text.report,
                 url: properties.message.link,
               },
               {
                 type: 'web_url',
                 url: this.config.MAP_URL,
-                title: buttons[properties.language].map,
+                title: buttons[properties.language].text.map,
               },
             ],
           },
@@ -94,12 +94,12 @@ export default class Facebook {
           buttons: [
             {
               type: 'web_url',
-              title: buttons[properties.language].view,
+              title: buttons[properties.language].text.view,
               url: properties.thanks.link,
             },
             {
               type: 'web_url',
-              title: buttons[properties.language].add,
+              title: buttons[properties.language].text.add,
               url: properties.card.link,
             },
           ],

@@ -1,6 +1,6 @@
 {
     "en": {
-      "buttons": {
+      "text": {
         "report": "Report flooding",
         "map": "View live reports",
         "view": "View your report",
@@ -8,7 +8,7 @@
       }
     },
     "id": {
-        "buttons": {
+        "text": {
             "report": "[ID] Report flooding",
             "map": "[ID] View live reports",
             "view": "[ID] View your report",
