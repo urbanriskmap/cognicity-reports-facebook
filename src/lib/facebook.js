@@ -21,35 +21,6 @@ export default class Facebook {
   }
 
   /**
-   * Method to filter text by keyword
-   * @method _classify
-   * @private
-   * @param {Object} message - Facebook message object
-   * @return {String} - Keyword or null
-   */
-  _classify(message) {
-    // Seet search expression
-    const re = new RegExp(/\/flood/gi);
-    // Determine whether this was a raw text or button response
-    if (message.message && message.message.text) {
-      // filter the message by keyword
-      if (re.exec(message.message.text) !== null) {
-        return 'flood';
-      } else {
-        return null;
-      }
-    } else if (message.postback && message.postback.payload) {
-      if (re.exec(message.postback.payload) !== null) {
-        return 'flood';
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-
-  /**
     * Prepares Facebook card message request object
     * @method _prepareCardResponse
     * @private
@@ -78,7 +49,7 @@ export default class Facebook {
               {
                 type: 'web_url',
                 url: this.config.MAP_URL,
-                title: 'View live reports',
+                title: 'View live flood map',
               },
             ],
           },
@@ -140,50 +111,6 @@ export default class Facebook {
   return ({request: request, body: body});
 }
 
-    /**
-    * Prepares default Facebook message request object
-    * @method _prepareDefaultResponse
-    * @private
-    * @param {Object} properties - Properties.request
-    * @param {String} properties.userId - User or Telegram chat ID for reply
-    * @param {String} properties.message - Bot lib message object
-    * @return {Object} - Request object
-  **/
-  _prepareDefaultResponse(properties) {
-    const body = {
-      recipient: {
-        id: properties.userId,
-      },
-      message: {
-        attachment: {
-          type: 'template',
-          payload: {
-            template_type: 'button',
-            text: properties.message.text,
-            buttons: [
-              {
-                type: 'web_url',
-                title: 'Report flooding',
-                url: properties.message.link,
-              },
-              {
-                type: 'web_url',
-                url: this.config.MAP_URL,
-                title: 'View live reports',
-              },
-            ],
-          },
-        },
-      },
-    };
-
-    const request = this.config.FACEBOOK_ENDPOINT +
-      '/?access_token=' +
-      this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
-
-    return ({request: request, body: body});
-  }
-
   /**
     * Send Facebook message
     * @method _sendMessage
@@ -244,27 +171,15 @@ export default class Facebook {
         language: this.config.DEFAULT_LANGUAGE,
         network: 'facebook',
       };
-      /* if (this._classify(facebookMessage) === 'flood') {
-        this.bot.card(properties)
-        .then((msg) => {
-          const response = this._prepareCardResponse(
-            {
-              userId: properties.userId,
-              message: msg,
-            });
-          resolve(this._sendMessage(response));
-        }).catch((err) => reject(err));
-      } else {*/
-        this.bot.card(properties)
-        .then((msg) => {
-          const response = this._prepareCardResponse(
-            {
-              userId: properties.userId,
-              message: msg,
-            });
-          resolve(this._sendMessage(response));
-        }).catch((err) => reject(err));
-     // }
+      this.bot.card(properties)
+      .then((msg) => {
+        const response = this._prepareCardResponse(
+          {
+            userId: properties.userId,
+            message: msg,
+          });
+        resolve(this._sendMessage(response));
+      }).catch((err) => reject(err));
     });
   }
 }
