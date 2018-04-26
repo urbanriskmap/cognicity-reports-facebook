@@ -9,10 +9,10 @@
     },
     "id": {
         "buttons": {
-            "report": "Report flooding",
-            "map": "View live reports",
-            "view": "View your report",
-            "add": "Add another report"
+            "report": "[ID] Report flooding",
+            "map": "[ID] View live reports",
+            "view": "[ID] View your report",
+            "add": "[ID] Add another report"
         }
     }
 }
