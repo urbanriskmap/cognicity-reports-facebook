@@ -99,8 +99,9 @@ export default class Facebook {
     * @method _prepareCardResponse
     * @private
     * @param {Object} properties - Request parameters
-    * @param {String} properties.userId - User or Telegram chat ID for reply
-    * @param {String} properties.message - Bot lib message object
+    * @param {Object} properties.thanks - Thanks reply object from bot
+    * @param {Object} properties.card - New card object from bot
+    * @param {String} properites.userId - User ID
     * @return {Object} - Request object
   **/
  _prepareThanksResponse(properties) {
@@ -113,12 +114,17 @@ export default class Facebook {
         type: 'template',
         payload: {
           template_type: 'button',
-          text: properties.message.text,
+          text: properties.thanks.message.text,
           buttons: [
             {
               type: 'web_url',
               title: 'View your report',
-              url: properties.message.link,
+              url: properties.thanks.message.link,
+            },
+            {
+              type: 'web_url',
+              title: 'Add another report',
+              url: properties.card.link,
             },
           ],
         },
@@ -214,13 +220,14 @@ export default class Facebook {
       Promise.all([this.bot.thanks(body), this.bot.card(body)])
         .then((values) => {
           console.log(values);
-          const response = this._prepareThanksResponse(
-            {
+          const properties = {
+            thanks: values[0],
+            card: values[1],
             userId: body.userId,
-            message: values[0],
-            });
+          };
+          const response = this._prepareThanksResponse(properties);
           resolve(this._sendMessage(response));
-        });
+        }).catch((err) => reject(err));
     });
   }
 
