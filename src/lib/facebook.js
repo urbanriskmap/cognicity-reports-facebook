@@ -72,8 +72,13 @@ export default class Facebook {
             buttons: [
               {
                 type: 'web_url',
-                title: 'Submit report',
+                title: 'Report flooding',
                 url: properties.message.link,
+              },
+              {
+                type: 'web_url',
+                url: this.config.MAP_URL,
+                title: 'View live reports',
               },
             ],
           },

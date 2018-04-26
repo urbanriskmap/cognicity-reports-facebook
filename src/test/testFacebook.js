@@ -193,12 +193,9 @@ export default function() {
             .then((res) => {
             test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
-            test.value(res.body).is({'recipient': {'id': '1'},
-            'message': {'attachment': {'type': 'template',
-            'payload': {'template_type': 'button',
-                'text': 'mocked card message',
-            'buttons': [{'type': 'web_url', 'title':
-                'Submit report', 'url': ' card'}]}}}});
+                test.value(res.body.recipient.id).is('1');
+                test.value(res.body.message.attachment.payload.text)
+                    .is('mocked card message');
             done();
             });
         });
