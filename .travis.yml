@@ -26,7 +26,7 @@ deploy:
     on:
       branch: dev
   - provider: lambda
-    function_name: "cognicity-facebook-webhook-master"
+    function_name: "cognicity-facebook-webhook-prod"
     region: $AWS_REGION
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
@@ -35,7 +35,7 @@ deploy:
     on:
       branch: master 
   - provider: lambda
-    function_name: "cognicity-facebook-reply-master"
+    function_name: "cognicity-facebook-reply-prod"
     region: $AWS_REGION
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
