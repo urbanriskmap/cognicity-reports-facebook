@@ -25,3 +25,21 @@ deploy:
     handler_name: "default"
     on:
       branch: dev
+  - provider: lambda
+    function_name: "cognicity-facebook-webhook-prod"
+    region: $AWS_REGION
+    role: $AWS_LAMBDA_ROLE
+    runtime: "nodejs8.10"
+    module_name: "bin/functions/receive"
+    handler_name: "default"
+    on:
+      branch: master 
+  - provider: lambda
+    function_name: "cognicity-facebook-reply-prod"
+    region: $AWS_REGION
+    role: $AWS_LAMBDA_ROLE
+    runtime: "nodejs8.10"
+    module_name: "bin/functions/send"
+    handler_name: "default"
+    on:
+      branch: master
