@@ -22,3 +22,5 @@ Adjust .travis.yml to deploy via Travis as need.
 ### Configuration
 Save a copy of sample.env as .env in local directory with appropriate credentials as defined in sample.env
 
+### Facebook Configuration
+- To subscribe to the get started button, make sure the app is subscrived to `messaging_postbacks` as set in the Messenger -> Settings -> Webhooks -> Edit events config page in developers.facebook.com

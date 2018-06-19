@@ -148,6 +148,10 @@ export default class Facebook {
   **/
   sendThanks(body) {
     return new Promise((resolve, reject) => {
+      if (body.instanceRegionCode === 'null') {
+        // catch reports outside the reporting area and reply a default
+        body.instanceRegionCode = this.config.DEFAULT_INSTANCE_REGION_CODE;
+      }
       Promise.all([this.bot.thanks(body), this.bot.card(body)])
         .then((values) => {
           console.log(values);
