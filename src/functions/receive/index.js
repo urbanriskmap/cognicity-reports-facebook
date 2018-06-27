@@ -43,6 +43,7 @@ import Facebook from '../../lib/facebook';
 
       callback(null, response);
       const payload = JSON.parse(event.body);
+      console.log(payload);
       facebook.sendReply(payload.entry[0].messaging[0])
         .then((data) => callback(null, response))
         .catch((err) => {
