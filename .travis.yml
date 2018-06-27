@@ -7,36 +7,60 @@ before_deploy:
   - npm run build
 
 deploy: 
+  # US Dev Webhook
   - provider: lambda
     function_name: "cognicity-facebook-webhook-dev"
-    region: $AWS_REGION
+    region: $AWS_REGION_US
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
     module_name: "bin/functions/receive"
     handler_name: "default"
     on:
       branch: dev 
+  # US Dev Reply
   - provider: lambda
     function_name: "cognicity-facebook-reply-dev"
-    region: $AWS_REGION
+    region: $AWS_REGION_US
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
     module_name: "bin/functions/send"
     handler_name: "default"
     on:
       branch: dev
+  # India Dev Webhook
+  - provider: lambda
+    function_name: "cognicity-facebook-webhook-dev"
+    region: $AWS_REGION_IN
+    role: $AWS_LAMBDA_ROLE
+    runtime: "nodejs8.10"
+    module_name: "bin/functions/receive"
+    handler_name: "default"
+    on:
+      branch: dev 
+  # India Dev Reply
+  - provider: lambda
+    function_name: "cognicity-facebook-reply-dev"
+    region: $AWS_REGION_IN
+    role: $AWS_LAMBDA_ROLE
+    runtime: "nodejs8.10"
+    module_name: "bin/functions/send"
+    handler_name: "default"
+    on:
+      branch: dev
+  # US Prod Webhook
   - provider: lambda
     function_name: "cognicity-facebook-webhook-prod"
-    region: $AWS_REGION
+    region: $AWS_REGION_US
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
     module_name: "bin/functions/receive"
     handler_name: "default"
     on:
       branch: master 
+  # US Prod Reply
   - provider: lambda
     function_name: "cognicity-facebook-reply-prod"
-    region: $AWS_REGION
+    region: $AWS_REGION_US
     role: $AWS_LAMBDA_ROLE
     runtime: "nodejs8.10"
     module_name: "bin/functions/send"
