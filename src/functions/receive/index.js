@@ -41,7 +41,7 @@ import Facebook from '../../lib/facebook';
 
       const facebook = new Facebook(config);
 
-      callback(null, response);
+      //callback(null, response); // what is this callback here for?
       const payload = JSON.parse(event.body);
       console.log(payload);
       facebook.sendReply(payload.entry[0].messaging[0])
