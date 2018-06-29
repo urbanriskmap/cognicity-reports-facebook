@@ -40,7 +40,11 @@ import util from '../../lib/util';
     } else if (event.httpMethod === 'POST') {
       console.log('POST request, indicates user input');
 
+      // Respond immediately to webhook
+      callback(null, response); 
+
       // Verify signature
+      console.log(event.body);
       const hash = util.sha256(event.body);
       console.log(hash);
       console.log(event.headers['X-Hub-Signature']);
@@ -48,7 +52,6 @@ import util from '../../lib/util';
       // create bot instance
       const facebook = new Facebook(config);
 
-      // callback(null, response); // what is this callback here for?
       const payload = JSON.parse(event.body);
       console.log(JSON.stringify(event));
       facebook.sendReply(payload.entry[0].messaging[0])
