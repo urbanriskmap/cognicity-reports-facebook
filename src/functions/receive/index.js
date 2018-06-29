@@ -41,11 +41,11 @@ import util from '../../lib/util';
       console.log('POST request, indicates user input');
 
       // Respond immediately to webhook
-      callback(null, response); 
+      callback(null, response);
 
       // Verify signature
       console.log(event.body);
-      const hash = util.sha256(event.body);
+      const hash = util.sha1(event.body);
       console.log(hash);
       console.log(event.headers['X-Hub-Signature']);
 

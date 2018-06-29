@@ -7,8 +7,8 @@ import util from '../lib/util';
 export default function() {
   describe('Util library testing', function() {
     it('Can create SHA256', function(done) {
-      test.value(util.sha256('test'))
-        .is('Aymga2LNFrM+tnkr6MYLFY2Jou46h2/Omogeu0iMCRQ=');
+      test.value(util.sha1('test'))
+        .is('GqNJWF7X7L07nEhqMAZ+OVyks1Y=');
       done();
     });
   });
