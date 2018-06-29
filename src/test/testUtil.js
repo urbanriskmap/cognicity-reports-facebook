@@ -6,7 +6,7 @@ import util from '../lib/util';
  */
 export default function() {
   describe('Util library testing', function() {
-    it('Can create SHA256', function(done) {
+    it('Can create SHA1', function(done) {
       test.value(util.sha1('test'))
         .is('GqNJWF7X7L07nEhqMAZ+OVyks1Y=');
       done();
