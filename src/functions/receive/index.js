@@ -1,5 +1,6 @@
 import config from '../../config';
 import Facebook from '../../lib/facebook';
+import crypto from 'crypto';
 
   const response = {
     statusCode: 200,
@@ -39,6 +40,16 @@ import Facebook from '../../lib/facebook';
     } else if (event.httpMethod === 'POST') {
       console.log('POST request, indicates user input');
 
+      // Verify signature
+      const hash = crypto.createHmac('sha256', 
+        this.config.FACEBOOK_VALIDATION_TOKEN)
+        .update(event.body)
+        .digest('base64');
+
+      console.log('hash', hash);
+      console.log(event.headers['X-Hub-Signature']);
+
+      // create bot instance
       const facebook = new Facebook(config);
 
       //callback(null, response); // what is this callback here for?
