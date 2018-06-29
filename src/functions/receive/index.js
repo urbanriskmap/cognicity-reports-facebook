@@ -1,6 +1,6 @@
 import config from '../../config';
 import Facebook from '../../lib/facebook';
-import crypto from 'crypto';
+import util from '../../lib/util';
 
   const response = {
     statusCode: 200,
@@ -41,12 +41,8 @@ import crypto from 'crypto';
       console.log('POST request, indicates user input');
 
       // Verify signature
-      const hash = crypto.createHmac('sha256',
-        config.FACEBOOK_APP_SECRET)
-        .update(event.body)
-        .digest('base64');
-
-      console.log('hash', hash);
+      const hash = util.sha256(event.body);
+      console.log(hash);
       console.log(event.headers['X-Hub-Signature']);
 
       // create bot instance

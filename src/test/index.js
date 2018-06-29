@@ -8,6 +8,8 @@
 // Unit tests
 import testFacebook from './testFacebook';
 import testLocale from './testLocale';
+import testUtil from './testUtil';
 
 testFacebook();
 testLocale();
+testUtil();
