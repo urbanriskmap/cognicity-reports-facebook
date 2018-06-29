@@ -44,7 +44,7 @@ import crypto from 'crypto';
       const hash = crypto.createHmac('sha256',
         config.FACEBOOK_VALIDATION_TOKEN)
         .update(event.body)
-        .digest('base64');
+        .digest('hex');
 
       console.log('hash', hash);
       console.log(event.headers['X-Hub-Signature']);
