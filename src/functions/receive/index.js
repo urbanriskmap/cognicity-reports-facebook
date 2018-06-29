@@ -41,8 +41,8 @@ import crypto from 'crypto';
       console.log('POST request, indicates user input');
 
       // Verify signature
-      const hash = crypto.createHmac('sha256', 
-        this.config.FACEBOOK_VALIDATION_TOKEN)
+      const hash = crypto.createHmac('sha256',
+        config.FACEBOOK_VALIDATION_TOKEN)
         .update(event.body)
         .digest('base64');
 
@@ -52,7 +52,7 @@ import crypto from 'crypto';
       // create bot instance
       const facebook = new Facebook(config);
 
-      //callback(null, response); // what is this callback here for?
+      // callback(null, response); // what is this callback here for?
       const payload = JSON.parse(event.body);
       console.log(JSON.stringify(event));
       facebook.sendReply(payload.entry[0].messaging[0])
