@@ -43,7 +43,7 @@ import Facebook from '../../lib/facebook';
 
       //callback(null, response); // what is this callback here for?
       const payload = JSON.parse(event.body);
-      console.log(payload);
+      console.log(JSON.stringify(event));
       facebook.sendReply(payload.entry[0].messaging[0])
         .then((data) => callback(null, response))
         .catch((err) => {
