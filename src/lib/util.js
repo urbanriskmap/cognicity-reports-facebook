@@ -11,6 +11,13 @@ module.exports = {
             config.FACEBOOK_APP_SECRET)
         .update(encoded, 'utf-8')
         .digest('hex');
-        return (hash);
+        return ('sha1='+hash);
+    },
+    compareSignatures: (a, b) => {
+        const state = crypto.timingSafeEqual(
+            Buffer.from(a),
+            Buffer.from(b)
+        );
+        return (state);
     },
 };

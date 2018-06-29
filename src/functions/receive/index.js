@@ -44,21 +44,25 @@ import util from '../../lib/util';
       callback(null, response);
 
       // Verify signature
-      console.log(event.body);
       const hash = util.sha1(event.body);
-      console.log(hash);
-      console.log(event.headers['X-Hub-Signature']);
+      const signed = util.compareSignatures(hash,
+        event.headers['X-Hub-Signature']);
 
-      // create bot instance
-      const facebook = new Facebook(config);
-
-      const payload = JSON.parse(event.body);
-      console.log(JSON.stringify(event));
-      facebook.sendReply(payload.entry[0].messaging[0])
-        .then((data) => callback(null, response))
-        .catch((err) => {
-          console.log('Error in request: ' + err.message);
-          callback(null, errorResponse);
-        });
+      if (signed === true) {
+        console.log('Request signature verified');
+        // Create bot instance
+        const facebook = new Facebook(config);
+        const payload = JSON.parse(event.body);
+        console.log(JSON.stringify(event));
+        facebook.sendReply(payload.entry[0].messaging[0])
+          .then((data) => callback(null, response))
+          .catch((err) => {
+            console.log('Error in request: ' + err.message);
+            callback(null, errorResponse);
+          });
+        } else {
+          console.log('Request signature did not match');
+          callback(null, 403, {});
+        }
     }
   };
