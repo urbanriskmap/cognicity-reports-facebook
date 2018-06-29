@@ -42,9 +42,9 @@ import crypto from 'crypto';
 
       // Verify signature
       const hash = crypto.createHmac('sha256',
-        config.FACEBOOK_VALIDATION_TOKEN)
+        config.FACEBOOK_APP_SECRET)
         .update(event.body)
-        .digest('hex');
+        .digest('base64');
 
       console.log('hash', hash);
       console.log(event.headers['X-Hub-Signature']);
