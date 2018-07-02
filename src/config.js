@@ -14,5 +14,4 @@ export default {
     FACEBOOK_VALIDATION_TOKEN: process.env.FACEBOOK_VALIDAION_TOKEN,
     MAP_URL: process.env.MAP_URL || 'https://dev.riskmap.us/',
     NETWORK_NAME: 'facebook',
-    TELEGRAM_ENDPOINT: process.env.TELEGRAM_ENDPOINT || 'https://api.telegram.org/bot',
 };
