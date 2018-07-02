@@ -1,14 +1,12 @@
 import crypto from 'crypto';
-import config from '../config';
 import utf8 from 'utf8';
 
 // Utility functions
 module.exports = {
-    // Format HTTP response
-    sha1: (payload) => {
+    // Create sha1 hash
+    sha1: (secret, payload) => {
         const encoded = utf8.encode(payload);
-        const hash = crypto.createHmac('sha1',
-            config.FACEBOOK_APP_SECRET)
+        const hash = crypto.createHmac('sha1', secret)
         .update(encoded, 'utf-8')
         .digest('hex');
         return ('sha1='+hash);

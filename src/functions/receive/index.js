@@ -44,7 +44,7 @@ import util from '../../lib/util';
       callback(null, response);
 
       // Verify signature
-      const hash = util.sha1(event.body);
+      const hash = util.sha1(config.FACEBOOK_APP_SECRET, event.body);
       const signed = util.compareSignatures(hash,
         event.headers['X-Hub-Signature']);
 

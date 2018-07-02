@@ -7,3 +7,7 @@ Deployment version:
 - improved thanks message
 
 ### v0.0.4
+- verify Facebook signatures
+- added India deployment
+- update bot-core package
+- improved test coverage
