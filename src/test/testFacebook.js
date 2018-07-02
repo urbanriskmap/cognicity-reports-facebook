@@ -109,6 +109,24 @@ export default function() {
         });
     });
 
+    it('Can get a card with a null instance region', function(done) {
+        const body = {
+          language: 'en',
+          instanceRegionCode: 'null',
+          reportId: '1',
+          userId: '1',
+        };
+        botError = false;
+        facebook.sendThanks(body)
+          .then((res) => {
+            test.value(
+                res.body.message.attachment.payload.buttons[1].url)
+                .is(' card');
+            botError = false;
+            done();
+          });
+      });
+
     it('Can get card message', function(done) {
       const payload = {
           'object': 'page',
