@@ -57,6 +57,12 @@ import util from '../../lib/util';
 
         console.log('payload', JSON.stringify(payload));
 
+        // Catch user in blacklist
+        config.BLACKLIST.find(function(element) {
+          if (element === payload.entry[0].messaging[0].sender.id) {
+            throw new Error ('User in blacklist');
+          }
+        });
 
         facebook.sendReply(payload.entry[0].messaging[0])
           .then((data) => callback(null, response))
