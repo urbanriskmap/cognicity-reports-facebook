@@ -55,7 +55,7 @@ import util from '../../lib/util';
         const payload = JSON.parse(event.body);
         console.log(JSON.stringify(event));
 
-        console.log('payload', payload);
+        console.log('payload', JSON.stringify(payload));
 
 
         facebook.sendReply(payload.entry[0].messaging[0])
