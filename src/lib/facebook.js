@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Bot from '@urbanriskmap/cognicity-bot-core';
-const messages = require('./messages-' + process.env.DEPLOYMENT + '.json');
 import buttons from './buttons.json';
 import Locale from './locale';
 
@@ -17,7 +16,9 @@ export default class Facebook {
    */
   constructor(config) {
     this.config = config;
-    this.config.MESSAGES = messages;
+    this.config.MESSAGES = require('./messages-' +
+      this.config.DEFAULT_INSTANCE_COUNTRY_CODE +
+      '.json');
     this.bot = new Bot(this.config);
     this.locale = new Locale(this.config);
     this.axios = axios;
