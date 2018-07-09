@@ -53,7 +53,15 @@ import util from '../../lib/util';
         // Create bot instance
         const facebook = new Facebook(config);
         const payload = JSON.parse(event.body);
-        console.log(JSON.stringify(event));
+
+        // Catch user in blacklist
+        config.BLACKLIST.find(function(element) {
+          if (element === payload.entry[0].messaging[0].sender.id) {
+            throw new Error('User in blacklist');
+          }
+        });
+
+        // Send reply
         facebook.sendReply(payload.entry[0].messaging[0])
           .then((data) => callback(null, response))
           .catch((err) => {

@@ -6,7 +6,7 @@ This module deploys AWS lambda functions that, after user initiates a conversati
 ### Install
 `npm install`
 
-### Getting started
+### Getting Started
 * Create Facebook app and page and get `APPSECRET` and `PAGEACCESSTOKEN` as explained [here](https://developers.facebook.com/docs/messenger-platform/guides/setup). Hold off on completing Step 2 (Set up webhooks) in the guide unitl you complete the steps below
 * Deploy functions to AWS Lambda
 * Set AWS Lambda environment variables that are listed in `config.js`, including Facebook `APPSECRET` and `PAGEACCESSTOKEN` (see Configuration below).
@@ -22,11 +22,11 @@ Adjust .travis.yml to deploy via Travis as need.
 Save a copy of sample.env as .env in local directory with appropriate credentials as defined in sample.env
 
 Configuration variables are as follows:
-* `API_GW_WEBHOOK` - the API GW address for the webhook endpoint (e.g. https://chatbots.riskmap.us/facebook/webhook). Currently this is unused by functions and is for reference.
-* `CARDS_API` - the endpoint for to get new report cards
+* `API_GW_WEBHOOK` - the API GW address for the webhook endpoint (e.g. https://chatbots.riskmap.us/facebook/webhook). Currently this is unused by functions and is for reference
+* `CARDS_API` - the endpoint to get new report cards
 * `CARDS_API_KEY` - the api key for the cards endpoint
 * `CARDS_URL` - the URL for card resources as sent to the client
-* `DEFAULT_INSTANCE_REGION_CODE` - incase a report is submitted outside a city, what city should the code fallback on.
+* `DEFAULT_INSTANCE_REGION_CODE` - in case a report is submitted outside a city, what city should the code fallback on
 * `DEFAULT_LANGUAGE` - default language for user interactions
 * `FACEBOOK_APP_SECRET` - the Facebook application secret used by Facebook to sign messenger events
 * `FACEBOOK_ENDPOINT` - the Facebook API endpoint to send messages
@@ -37,7 +37,7 @@ Configuration variables are as follows:
 
 ### Facebook Configuration
 - To subscribe to the get started button, make sure the app is subscrived to `messaging_postbacks` as set in the Messenger -> Settings -> Webhooks -> Edit events config page in developers.facebook.com
-- To setup messenger buttons and greeting see the scripts in the `commands` folder (scripts require a .env file with Facebook app secrets to populate config.js).
+- To setup messenger buttons and greeting see the scripts in the `commands` folder (scripts require a .env file with Facebook app secrets to populate config.js)
 
 ### Testing
 run `npm run test`
