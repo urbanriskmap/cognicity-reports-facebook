@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Bot from '@urbanriskmap/cognicity-bot-core';
-import messages from './messages.json';
+const messages = require('./messages-' + process.env.DEPLOYMENT + '.json');
 import buttons from './buttons.json';
 import Locale from './locale';
 

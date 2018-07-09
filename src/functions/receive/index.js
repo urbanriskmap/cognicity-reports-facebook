@@ -57,7 +57,7 @@ import util from '../../lib/util';
         // Catch user in blacklist
         config.BLACKLIST.find(function(element) {
           if (element === payload.entry[0].messaging[0].sender.id) {
-            throw new Error ('User in blacklist');
+            throw new Error('User in blacklist');
           }
         });
 

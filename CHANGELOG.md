@@ -11,3 +11,5 @@ Deployment version:
 - added India deployment
 - update bot-core package
 - improved test coverage
+- add blacklist functionalit
+- add support for multiple deployment messages
