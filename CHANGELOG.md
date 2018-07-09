@@ -13,3 +13,5 @@ Deployment version:
 - improved test coverage
 - add blacklist functionalit
 - add support for multiple deployment messages
+
+### v0.0.5
