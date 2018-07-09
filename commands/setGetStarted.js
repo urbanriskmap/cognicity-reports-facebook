@@ -3,7 +3,9 @@
 import axios from 'axios';
 require('dotenv').config();
 import config from '../src/config';
-import messages from '../src/lib/messages';
+const messages = require('../src/lib/messages-' +
+      config.DEFAULT_INSTANCE_COUNTRY_CODE +
+      '.json');
 
 const body = {
     "get_started":
