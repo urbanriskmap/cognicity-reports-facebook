@@ -6,11 +6,11 @@
         "thanks": "Thank you for your report. Click to see your report on the map."
       }
     },
-    "id": {
+    "es": {
       "texts": {
-        "default": "[ID] RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
-        "card": "[ID] RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
-        "thanks": "[ID] Thank you for your report. Click to see your report on the map."
+        "default": "RiskMap bot lo ayuda a reportar inundaciones en tiempo real. En situaciones que amenazan la vida, llame al 911.",
+        "card": "RiskMap bot lo ayuda a reportar inundaciones en tiempo real. En situaciones que amenazan la vida, llame al 911.",
+        "thanks": "Gracias por tu informe. Haga clic para ver su informe en el mapa."
       }
     }
 }

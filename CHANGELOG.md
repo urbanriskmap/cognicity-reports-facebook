@@ -15,3 +15,4 @@ Deployment version:
 - add support for multiple deployment messages
 
 ### v0.0.5
+- update language files
