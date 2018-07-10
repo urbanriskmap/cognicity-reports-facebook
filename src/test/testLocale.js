@@ -7,7 +7,7 @@ import config from '../config';
  * Facebook library function testing harness
  */
 export default function() {
-  describe('Facebook bot testing', function() {
+  describe('Facebook locale class testing', function() {
     const locale = new Locale(config);
     const oldAxios = locale.axios;
     let axiosError = false;
