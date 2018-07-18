@@ -16,3 +16,4 @@ Deployment version:
 
 ### v0.0.5
 - update language files
+- add translations for buttons

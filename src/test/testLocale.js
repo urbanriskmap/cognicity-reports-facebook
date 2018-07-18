@@ -4,7 +4,7 @@ import Locale from '../lib/locale';
 import config from '../config';
 
 /**
- * Facebook library function testing harness
+ * Facebook locale class testing harness
  */
 export default function() {
   describe('Facebook locale class testing', function() {
