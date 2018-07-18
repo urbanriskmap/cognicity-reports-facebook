@@ -1,0 +1,612 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2018-06-01T18:40:42Z",
+    "title": "chatbots"
+  },
+  "host": "y4gk34b985.execute-api.us-west-2.amazonaws.com",
+  "basePath": "/dev",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/facebook": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/facebook/send": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-facebook-reply-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/facebook/webhook": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-facebook-webhook-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-facebook-webhook-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/telegram": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/telegram/322efc23-323b-4565-96ad-a770c5a9607b": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-telegram-webhook-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/telegram/send": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-telegram-reply-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/twitter": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/twitter/send": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-twitter-dm-reply-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            },
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              }
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\"statusCode\": 200}"
+          },
+          "type": "mock"
+        }
+      }
+    },
+    "/twitter/webhook": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-twitter-dm-webhook-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      },
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/Empty"
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:917524458155:function:cognicity-twitter-dm-webhook-${stageVariables.env}/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
+          "httpMethod": "POST",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "x-api-key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Empty": {
+      "type": "object",
+      "title": "Empty Schema"
+    }
+  }
+}
