@@ -130,7 +130,7 @@ export default class Facebook {
     return new Promise((resolve, reject) => {
       console.log('Sending request to facebook.');
       console.log(properties.request);
-      console.log(properties.body);
+      console.log(JSON.stringify(properties.body));
       this.axios.post(properties.request, properties.body)
         .then((response) => resolve(response))
         .catch((err) => reject(err));
