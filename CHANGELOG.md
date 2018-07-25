@@ -17,3 +17,5 @@ Deployment version:
 ### v0.0.5
 - update language files
 - add translations for buttons
+- changed config defaults to prod-us instance
+- updated bot-core package
