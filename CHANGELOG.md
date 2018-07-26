@@ -13,3 +13,9 @@ Deployment version:
 - improved test coverage
 - add blacklist functionalit
 - add support for multiple deployment messages
+
+### v0.0.5
+- update language files
+- add translations for buttons
+- changed config defaults to prod-us instance
+- updated bot-core package

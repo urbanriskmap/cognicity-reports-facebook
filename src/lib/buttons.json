@@ -7,6 +7,14 @@
         "add": "Add another report"
       }
     },
+    "es": {
+        "text": {
+          "report": "Inportar inundaciones",
+          "map": "Ver el mapa de inundación en vivo",
+          "view": "Ver su informe",
+          "add": "Agregar otro informe"
+        }
+      },
     "id": {
         "text": {
             "report": "[ID] Report flooding",
