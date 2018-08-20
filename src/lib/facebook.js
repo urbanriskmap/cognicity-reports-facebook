@@ -54,7 +54,8 @@ export default class Facebook {
               {
                 type: 'web_url',
                 title: buttons[properties.language].text.prep,
-                url: properties.message.prepLink,
+                // url: properties.message.prepLink,
+                url: this.config.PREP_URL + 'test123',
               },
               {
                 type: 'web_url',
