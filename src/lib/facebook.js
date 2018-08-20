@@ -53,6 +53,11 @@ export default class Facebook {
               },
               {
                 type: 'web_url',
+                title: buttons[properties.language].text.prep,
+                url: properties.message.prepLink,
+              },
+              {
+                type: 'web_url',
                 url: this.config.MAP_URL,
                 title: buttons[properties.language].text.map,
               },
@@ -72,7 +77,7 @@ export default class Facebook {
 
     /**
     * Prepares Facebook card message request object
-    * @method _prepareCardResponse
+    * @method _prepareThanksResponse
     * @private
     * @param {Object} properties - Request parameters
     * @param {Object} properties.thanks - Thanks reply object from bot
@@ -200,5 +205,3 @@ export default class Facebook {
     });
   }
 }
-
-
