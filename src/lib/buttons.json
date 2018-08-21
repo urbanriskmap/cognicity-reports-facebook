@@ -2,10 +2,11 @@
     "en": {
       "text": {
         "report": "Report flooding",
-        "prep": "Other disruptions",
+        "prep": "Report disruptions",
         "map": "View live flood map",
         "view": "View your report",
-        "add": "Add another report"
+        "add": "Report flooding",
+        "addPrep": "Report disruptions"
       }
     },
     "es": {
@@ -14,7 +15,8 @@
           "prep": "Ayude a preparar",
           "map": "Ver el mapa de inundación en vivo",
           "view": "Ver su informe",
-          "add": "Agregar otro informe"
+          "add": "Agregar otro informe",
+          "addPrep": "Ayude a preparar"
         }
       },
     "id": {

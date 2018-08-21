@@ -24,9 +24,10 @@ export default class Facebook {
     this.axios = axios;
   }
 
+
   /**
-    * Prepares Facebook card message request object
-    * @method _prepareCardResponse
+    * Get the buttons that correspond to the card deck in use
+    * @method _getButtonsCardResponse
     * @private
     * @param {Object} properties - Request parameters
     * @param {String} properties.userId - User or Telegram chat ID for reply
@@ -34,7 +35,7 @@ export default class Facebook {
     * @param {String} properties.language - User locale (e.g. 'en')
     * @return {Object} - Request object
   **/
-  _prepareCardResponse(properties) {
+  _getButtonsCardResponse(properties) {
     const floodButton = {
       type: 'web_url',
       title: buttons[properties.language].text.report,
@@ -63,6 +64,20 @@ export default class Facebook {
     }
     // always push the view map button
     customButtons.push(mapViewButton);
+    return customButtons;
+  }
+
+  /**
+    * Prepares Facebook card message request object
+    * @method _prepareCardResponse
+    * @private
+    * @param {Object} properties - Request parameters
+    * @param {String} properties.userId - User or Telegram chat ID for reply
+    * @param {String} properties.message - Bot lib message object
+    * @param {String} properties.language - User locale (e.g. 'en')
+    * @return {Object} - Request object
+  **/
+  _prepareCardResponse(properties) {
     const body = {
       recipient: {
         id: properties.userId,
@@ -73,7 +88,7 @@ export default class Facebook {
           payload: {
             template_type: 'button',
             text: properties.message.text,
-            buttons: customButtons,
+            buttons: this._getButtonsCardResponse(properties),
           },
         },
       },
@@ -87,6 +102,53 @@ export default class Facebook {
     return ({request: request, body: body});
   }
 
+
+  /**
+    * Get the buttons that correspond to the card deck in use
+    * @method _getButtons
+    * @private
+    * @param {Object} properties - Request parameters
+    * @param {Object} properties.thanks - bot lib thanks object
+    * @param {Object} properties.card - Bot lib card object
+    * @param {String} properties.card.link - link to add another
+    *                                 flood report
+    * @param {String} properties.card.prepLink - link to add
+    *                                 prep report
+    * @return {Object} - Request object
+  **/
+  _getButtonsThanksResponse(properties) {
+    let customButtons = [];
+
+    const viewReportButton = {
+      type: 'web_url',
+      title: buttons[properties.language].text.view,
+      url: properties.thanks.link,
+    };
+
+    // always push the view map button first
+    customButtons.push(viewReportButton);
+    const addPrepButton = {
+
+      type: 'web_url',
+      title: buttons[properties.language].text.addPrep,
+      url: properties.card.prepLink,
+    };
+
+    const addFloodReport = {
+        type: 'web_url',
+        url: properties.card.link,
+        title: buttons[properties.language].text.add,
+    };
+
+    if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
+      customButtons.push(addFloodReport);
+    }
+
+    if (this.config.CARDS_DECK.indexOf('prep') >= 0) {
+      customButtons.push(addPrepButton);
+    }
+    return customButtons;
+  }
     /**
     * Prepares Facebook card message request object
     * @method _prepareThanksResponse
@@ -99,6 +161,8 @@ export default class Facebook {
     * @return {Object} - Request object
   **/
  _prepareThanksResponse(properties) {
+   console.log('PREPARE THANKS');
+   console.log(properties);
   const body = {
     recipient: {
       id: properties.userId,
@@ -109,18 +173,7 @@ export default class Facebook {
         payload: {
           template_type: 'button',
           text: properties.thanks.text,
-          buttons: [
-            {
-              type: 'web_url',
-              title: buttons[properties.language].text.view,
-              url: properties.thanks.link,
-            },
-            {
-              type: 'web_url',
-              title: buttons[properties.language].text.add,
-              url: properties.card.link,
-            },
-          ],
+          buttons: this._getButtonsThanksResponse(properties),
         },
       },
     },
@@ -182,6 +235,8 @@ export default class Facebook {
             userId: body.userId,
             language: body.language,
           };
+          console.log('PROPERTIES FOR THANKS RESP');
+          console.log(JSON.stringify(properties));
           const response = this._prepareThanksResponse(properties);
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));

@@ -30,7 +30,13 @@ export default function() {
       const mockCard = function(properties) {
         return new Promise((resolve, reject) => {
           if (botError === false) {
-            resolve({text: 'mocked card message', link: ' card'});
+            resolve(
+              {
+                text: 'mocked card message',
+                link: ' card',
+                prepLink: ' prep Card',
+              }
+            );
           } else {
             reject(new Error(`bot error`));
           }
@@ -119,6 +125,7 @@ export default function() {
         botError = false;
         facebook.sendThanks(body)
           .then((res) => {
+            // the second element should be the flood
             test.value(
                 res.body.message.attachment.payload.buttons[1].url)
                 .is(' card');
