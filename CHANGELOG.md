@@ -22,3 +22,6 @@ Deployment version:
 
 ### v0.1.0
 - Add prep cards
+
+### v0.1.1
+- Allow multiple card decks

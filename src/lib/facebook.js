@@ -35,6 +35,34 @@ export default class Facebook {
     * @return {Object} - Request object
   **/
   _prepareCardResponse(properties) {
+    const floodButton = {
+      type: 'web_url',
+      title: buttons[properties.language].text.report,
+      url: properties.message.link,
+    };
+
+    const prepButton = {
+      type: 'web_url',
+      title: buttons[properties.language].text.prep,
+      url: properties.message.prepLink,
+    };
+
+    const mapViewButton = {
+        type: 'web_url',
+        url: this.config.MAP_URL,
+        title: buttons[properties.language].text.map,
+    };
+
+    let customButtons = [];
+    if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
+      customButtons.push(floodButton);
+    }
+
+    if (this.config.CARDS_DECK.indexOf('prep') >= 0) {
+      customButtons.push(prepButton);
+    }
+    // always push the view map button
+    customButtons.push(mapViewButton);
     const body = {
       recipient: {
         id: properties.userId,
@@ -45,23 +73,7 @@ export default class Facebook {
           payload: {
             template_type: 'button',
             text: properties.message.text,
-            buttons: [
-              {
-                type: 'web_url',
-                title: buttons[properties.language].text.report,
-                url: properties.message.link,
-              },
-              {
-                type: 'web_url',
-                title: buttons[properties.language].text.prep,
-                url: properties.message.prepLink,
-              },
-              {
-                type: 'web_url',
-                url: this.config.MAP_URL,
-                title: buttons[properties.language].text.map,
-              },
-            ],
+            buttons: customButtons,
           },
         },
       },
