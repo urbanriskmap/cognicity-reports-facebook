@@ -24,7 +24,7 @@
     "url": "https://github.com/urbanriskmap/cognicity-reports-facebook/issues"
   },
   "dependencies": {
-    "@urbanriskmap/cognicity-bot-core": "1.0.5",
+    "@urbanriskmap/cognicity-bot-core": "1.1.0",
     "axios": "^0.18.0",
     "dotenv": "^4.0.0",
     "request": "^2.83.0",
