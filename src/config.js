@@ -7,6 +7,7 @@ export default {
     CARDS_API: process.env.CARDS_API || 'https://data.riskmap.us/cards/',
     CARDS_API_KEY: process.env.CARDS_API_KEY,
     CARDS_URL: process.env.CARDS_URL || 'https://cards.riskmap.us/flood/',
+    PREP_URL: process.env.PREP_URL || 'https://cards.riskmap.us/prep/',
     DEFAULT_INSTANCE_COUNTRY_CODE: process.env.DEFAULT_INSTANCE_COUNTRY_CODE || 'us',
     DEFAULT_INSTANCE_REGION_CODE: process.env.DEFAULT_INSTANCE_REGION_CODE || 'brw',
     DEFAULT_LANGUAGE: process.env.DEFAULT_LANGUAGE || 'id',
