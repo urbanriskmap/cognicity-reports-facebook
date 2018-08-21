@@ -19,3 +19,6 @@ Deployment version:
 - add translations for buttons
 - changed config defaults to prod-us instance
 - updated bot-core package
+
+### v0.1.0
+- Add prep cards
