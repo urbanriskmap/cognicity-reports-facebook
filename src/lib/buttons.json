@@ -1,31 +1,29 @@
 {
-    "en": {
+  "en": {
+    "text": {
+      "map": "View live flood map",
+      "report": "Report flooding",
+      "prep": "Report disruptions",
+      "assessment": "Create assessment",
+      "view": "View your report"
+    }
+  },
+    "es": {
       "text": {
-        "report": "Report flooding",
-        "prep": "Report disruptions",
-        "map": "View live flood map",
-        "view": "View your report",
-        "add": "Report flooding",
-        "addPrep": "Report disruptions"
+        "map": "Ver el mapa de inundación en vivo",
+        "report": "Importar inundaciones",
+        "prep": "Ayude a preparar",
+        "assessment": "Crear evaluación",
+        "view": "Ver su informe"
       }
     },
-    "es": {
-        "text": {
-          "report": "Inportar inundaciones",
-          "prep": "Ayude a preparar",
-          "map": "Ver el mapa de inundación en vivo",
-          "view": "Ver su informe",
-          "add": "Agregar otro informe",
-          "addPrep": "Ayude a preparar"
-        }
-      },
     "id": {
-        "text": {
-           "prep": "[ID] Help prepare",
-           "report": "[ID] Report flooding",
-           "map": "[ID] View live reports",
-           "view": "[ID] View your report",
-           "add": "[ID] Add another report"
-        }
+      "text": {
+        "map": "[ID] View live reports",
+        "report": "[ID] Report flooding",
+        "prep": "[ID] Help prepare",
+        "assessment": "[ID] Create Assessment",
+        "view": "[ID] View your report"
+      }
     }
 }

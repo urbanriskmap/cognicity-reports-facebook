@@ -35,6 +35,7 @@ export default function() {
                 text: 'mocked card message',
                 link: ' card',
                 prepLink: ' prep Card',
+                assessmentLink: ' assessment Card',
               }
             );
           } else {
@@ -96,7 +97,7 @@ export default function() {
           test.value(res.body.message.attachment.payload.text)
               .is('mocked thanks message');
           done();
-        });
+        }).catch((err) => console.log(err));
     });
 
     it('Can catch bot error with thanks messsage', function(done) {

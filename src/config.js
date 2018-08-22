@@ -2,6 +2,7 @@
 require('dotenv').config({silent: true});
 
 export default {
+    ASSESSMENT_URL: process.env.ASSESSMENT_URL || 'https://cards.riskmap.us/assessment/',
     API_GW_WEBHOOK: process.env.API_GW_WEBHOOK,
     BLACKLIST: (process.env.BLACKLIST || '').split(','),
     CARDS_API: process.env.CARDS_API || 'https://data.riskmap.us/cards/',

@@ -24,7 +24,6 @@ export default class Facebook {
     this.axios = axios;
   }
 
-
   /**
     * Get the buttons that correspond to the card deck in use
     * @method _getButtonsCardResponse
@@ -36,6 +35,8 @@ export default class Facebook {
     * @return {Object} - Request object
   **/
   _getButtonsCardResponse(properties) {
+    let customButtons = [];
+
     const floodButton = {
       type: 'web_url',
       title: buttons[properties.language].text.report,
@@ -48,19 +49,28 @@ export default class Facebook {
       url: properties.message.prepLink,
     };
 
+    const assessmentButton = {
+      type: 'web_url',
+      title: buttons[properties.language].text.assessment,
+      url: properties.message.assessmentLink,
+    };
+
     const mapViewButton = {
         type: 'web_url',
         url: this.config.MAP_URL,
         title: buttons[properties.language].text.map,
     };
 
-    let customButtons = [];
     if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
       customButtons.push(floodButton);
     }
 
     if (this.config.CARDS_DECK.indexOf('prep') >= 0) {
       customButtons.push(prepButton);
+    }
+
+    if (this.config.CARDS_DECK.indexOf('assessment') >= 0) {
+      customButtons.push(assessmentButton);
     }
     // always push the view map button
     customButtons.push(mapViewButton);
@@ -105,7 +115,7 @@ export default class Facebook {
 
   /**
     * Get the buttons that correspond to the card deck in use
-    * @method _getButtons
+    * @method _getButtonsThanksResponse
     * @private
     * @param {Object} properties - Request parameters
     * @param {Object} properties.thanks - bot lib thanks object
@@ -127,25 +137,32 @@ export default class Facebook {
 
     // always push the view map button first
     customButtons.push(viewReportButton);
-    const addPrepButton = {
-
-      type: 'web_url',
-      title: buttons[properties.language].text.addPrep,
-      url: properties.card.prepLink,
-    };
-
-    const addFloodReport = {
-        type: 'web_url',
-        url: properties.card.link,
-        title: buttons[properties.language].text.add,
-    };
 
     if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
+      const addFloodReport = {
+        type: 'web_url',
+        url: properties.card.link,
+        title: buttons[properties.language].text.report,
+      };
       customButtons.push(addFloodReport);
     }
 
     if (this.config.CARDS_DECK.indexOf('prep') >= 0) {
+      const addPrepButton = {
+        type: 'web_url',
+        title: buttons[properties.language].text.prep,
+        url: properties.card.prepLink,
+      };
       customButtons.push(addPrepButton);
+    }
+
+    if (this.config.CARDS_DECK.indexOf('assessment') >= 0) {
+      const assessmentButton = {
+        type: 'web_url',
+        title: buttons[properties.language].text.assessment,
+        url: properties.card.assessmentLink,
+      };
+      customButtons.push(assessmentButton);
     }
     return customButtons;
   }
@@ -161,8 +178,6 @@ export default class Facebook {
     * @return {Object} - Request object
   **/
  _prepareThanksResponse(properties) {
-   console.log('PREPARE THANKS');
-   console.log(properties);
   const body = {
     recipient: {
       id: properties.userId,
@@ -235,8 +250,6 @@ export default class Facebook {
             userId: body.userId,
             language: body.language,
           };
-          console.log('PROPERTIES FOR THANKS RESP');
-          console.log(JSON.stringify(properties));
           const response = this._prepareThanksResponse(properties);
           resolve(this._sendMessage(response));
         }).catch((err) => reject(err));
