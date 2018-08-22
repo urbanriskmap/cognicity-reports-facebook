@@ -24,6 +24,7 @@ Save a copy of sample.env as .env in local directory with appropriate credential
 Configuration variables are as follows:
 * `API_GW_WEBHOOK` - the API GW address for the webhook endpoint (e.g. https://chatbots.riskmap.us/facebook/webhook). Currently this is unused by functions and is for reference
 * `CARDS_API` - the endpoint to get new report cards
+* `CARDS_DECK` - which cards decks are deployed on this instance. Subset of 'flood,prep'.
 * `CARDS_API_KEY` - the api key for the cards endpoint
 * `CARDS_URL` - the URL for card resources as sent to the client
 * `DEFAULT_INSTANCE_REGION_CODE` - in case a report is submitted outside a city, what city should the code fallback on
@@ -34,6 +35,7 @@ Configuration variables are as follows:
 * `FACEBOOK_VALIDATION_TOKEN` - a random string that is a shared secret between Facebook and this software (e.g. a [UUID](https://duckduckgo.com/?q=!guid))
 * `MAP_URL` - the risk map URL
 * `NETWORK_NAME` - 'facebook' for CogniCity logging
+* `PREP_URL` - the prep card url (e.g. https://cards-dev.riskmap.in/prep/)
 
 ### Facebook Configuration
 - To subscribe to the get started button, make sure the app is subscrived to `messaging_postbacks` as set in the Messenger -> Settings -> Webhooks -> Edit events config page in developers.facebook.com
