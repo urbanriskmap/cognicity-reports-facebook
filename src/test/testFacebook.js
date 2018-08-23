@@ -190,7 +190,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
-                .is('mocked card message');
+                .contains('mocked card message');
           done();
         });
     });
@@ -220,7 +220,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
-                .is('mocked card message');
+                .contains('mocked card message');
             done();
           });
       });
@@ -252,7 +252,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
                 test.value(res.body.recipient.id).is('1');
                 test.value(res.body.message.attachment.payload.text)
-                    .is('mocked card message');
+                    .contains('mocked card message');
             done();
             });
         });
@@ -286,7 +286,7 @@ export default function() {
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
-                .is('mocked card message');
+                .contains('mocked card message');
             done();
             });
         });

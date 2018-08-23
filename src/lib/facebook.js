@@ -55,12 +55,6 @@ export default class Facebook {
       url: properties.message.assessmentLink,
     };
 
-    const mapViewButton = {
-        type: 'web_url',
-        url: this.config.MAP_URL,
-        title: buttons[properties.language].text.map,
-    };
-
     if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
       customButtons.push(floodButton);
     }
@@ -72,8 +66,6 @@ export default class Facebook {
     if (this.config.CARDS_DECK.indexOf('assessment') >= 0) {
       customButtons.push(assessmentButton);
     }
-    // always push the view map button
-    customButtons.push(mapViewButton);
     return customButtons;
   }
 
@@ -97,7 +89,9 @@ export default class Facebook {
           type: 'template',
           payload: {
             template_type: 'button',
-            text: properties.message.text,
+            text: properties.message.text + ' ' +
+                  buttons[properties.language].text.map +
+                  ' ' + this.config.MAP_URL,
             buttons: this._getButtonsCardResponse(properties),
           },
         },
