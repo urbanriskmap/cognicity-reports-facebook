@@ -113,6 +113,9 @@ export default function() {
           test.value(err.message).is('bot error');
           botError = false;
           done();
+        }).catch((err) => {
+          console.error(err);
+          test.value(false).is(true); // make sure test fails
         });
     });
 
@@ -126,14 +129,40 @@ export default function() {
         botError = false;
         facebook.sendThanks(body)
           .then((res) => {
-            // the second element should be the flood
+            // the first element should be the flood card
             test.value(
-                res.body.message.attachment.payload.buttons[1].url)
-                .is(' prep Card');
+                res.body.message.attachment.payload.buttons[0].url)
+                .is(' card');
             botError = false;
             done();
+          }).catch((err) => {
+            console.error(err);
+            test.value(false).is(true); // make sure test fails
           });
       });
+
+    it('Can get a prep card', function(done) {
+      const body = {
+        language: 'en',
+        instanceRegionCode: 'null',
+        reportId: '1',
+        userId: '1',
+      };
+      botError = false;
+      facebook.config.CARDS_DECK.push('prep');
+      facebook.sendThanks(body)
+        .then((res) => {
+          // the second element should be the prep card
+          test.value(
+            res.body.message.attachment.payload.buttons[1].url)
+            .is(' prep Card');
+          botError = false;
+          done();
+        }).catch((err) => {
+          console.error(err);
+          test.value(false).is(true); // make sure test fails
+        });
+    });
 
     it('Can get card message', function(done) {
       const payload = {
