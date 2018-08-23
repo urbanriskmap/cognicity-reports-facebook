@@ -95,7 +95,7 @@ export default function() {
           test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token='+config.FACEBOOK_PAGE_ACCESS_TOKEN);
           test.value(res.body.recipient.id).is('1');
           test.value(res.body.message.attachment.payload.text)
-              .is('mocked thanks message');
+              .contains('mocked thanks message');
           done();
         }).catch((err) => console.log(err));
     });
@@ -129,7 +129,7 @@ export default function() {
             // the second element should be the flood
             test.value(
                 res.body.message.attachment.payload.buttons[1].url)
-                .is(' card');
+                .is(' prep Card');
             botError = false;
             done();
           });

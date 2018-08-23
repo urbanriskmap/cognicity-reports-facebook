@@ -129,15 +129,6 @@ export default class Facebook {
   _getButtonsThanksResponse(properties) {
     let customButtons = [];
 
-    const viewReportButton = {
-      type: 'web_url',
-      title: buttons[properties.language].text.view,
-      url: properties.thanks.link,
-    };
-
-    // always push the view map button first
-    customButtons.push(viewReportButton);
-
     if (this.config.CARDS_DECK.indexOf('flood') >= 0) {
       const addFloodReport = {
         type: 'web_url',
@@ -187,7 +178,10 @@ export default class Facebook {
         type: 'template',
         payload: {
           template_type: 'button',
-          text: properties.thanks.text,
+          // Add the report link in the text
+          text: properties.thanks.text + ' ' +
+                  buttons[properties.language].text.view +
+                  ' ' + properties.thanks.link,
           buttons: this._getButtonsThanksResponse(properties),
         },
       },
