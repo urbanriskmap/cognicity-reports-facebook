@@ -4,7 +4,7 @@
       "map": "View live flood map",
       "report": "Report flooding",
       "prep": "Report disruptions",
-      "assessment": "Create assessment",
+      "assessment": "Evaluate damage",
       "view": "View your report"
     }
   },
@@ -22,7 +22,7 @@
         "map": "[ID] View live reports",
         "report": "[ID] Report flooding",
         "prep": "[ID] Help prepare",
-        "assessment": "[ID] Create Assessment",
+        "assessment": "[ID] Evaluate damage",
         "view": "[ID] View your report"
       }
     }
