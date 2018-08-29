@@ -28,3 +28,6 @@ Deployment version:
 
 ### v0.1.2
 - Prep cards in reply
+
+### v0.2.0
+- Add assessment cards
