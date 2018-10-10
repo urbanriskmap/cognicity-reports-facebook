@@ -1,6 +1,6 @@
 {
   "name": "cognicity-reports-facebook",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Facebook Messenger bot running on AWS lambda",
   "main": "index.js",
   "scripts": {
