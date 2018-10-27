@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook.svg?branch=dev)](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook) [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-reports-facebook/badge.svg?branch=dev)](https://coveralls.io/github/urbanriskmap/cognicity-reports-facebook?branch=dev) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) 
+[![Build Status](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook.svg?branch=dev)](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook) [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-reports-facebook/badge.svg?branch=dev)](https://coveralls.io/github/urbanriskmap/cognicity-reports-facebook?branch=dev) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 # cognicity-reports-facebook
 This module deploys AWS lambda functions that, after user initiates a conversation via Facebook messenger, uses the cognicity-bot-core module to fetch a report card from a CogniCity server and sends it to the user.
@@ -39,7 +39,7 @@ Configuration variables are as follows:
 
 ### Facebook Configuration
 - To subscribe to the get started button, make sure the app is subscrived to `messaging_postbacks` as set in the Messenger -> Settings -> Webhooks -> Edit events config page in developers.facebook.com
-- To setup messenger buttons and greeting see the scripts in the `commands` folder (scripts require a .env file with Facebook app secrets to populate config.js)
+- To setup messenger buttons and greeting see the scripts in the `commands` folder (scripts require a .env file with Facebook app secrets to populate config.js). Note that for unsupported locales (such as in_ID, see [supported list here](https://developers.facebook.com/docs/messenger-platform/messenger-profile/supported-locales)) you will need to modify the default but not commit that change back in.
 
 ### Testing
 run `npm run test`
