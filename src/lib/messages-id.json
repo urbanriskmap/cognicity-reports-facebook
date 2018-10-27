@@ -8,9 +8,9 @@
     },
     "id": {
         "texts": {
-            "default": "[ID] RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
-            "card": "[ID] RiskMap bot helps you report flooding in realtime. In life-threatening situations call 911.",
-            "thanks": "[ID] Thank you for your report. Click to see your report on the map."
+            "default": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara _real-time_.",
+            "card": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara _real-time_",
+            "thanks": "Terima kasih sudah melapor. Klik untuk melihat hasil tampilan laporan dalam peta."
           }
     }
 }
