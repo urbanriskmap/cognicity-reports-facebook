@@ -8,8 +8,8 @@
     },
     "id": {
         "texts": {
-            "default": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara _real-time_.",
-            "card": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara _real-time_",
+            "default": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara real-time.",
+            "card": "Bot RiskMap akan membantu kamu dalam melaporkan banjir secara real-time",
             "thanks": "Terima kasih sudah melapor. Klik untuk melihat hasil tampilan laporan dalam peta."
           }
     }
