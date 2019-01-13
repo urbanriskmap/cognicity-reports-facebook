@@ -16,7 +16,44 @@ This module deploys AWS lambda functions that, after user initiates a conversati
 * Send a text to your Facebook messenger bot to test if it is up and running!
 
 ### Deployment
-Adjust .travis.yml to deploy via Travis as need.
+1. Adjust .travis.yml to deploy via Travis as need. To add a new country, first
+   add two lamdbda providers: webhook and reply. The webhook lambda will listen for new incoming messages from facebook and the reply will send finished
+   report links back to the user after they submit a card.
+2. Add the AWS_REGION environment variable to travis for the new region that is
+   being supported.  Currently only one lambda per region per stage is
+   supported.
+3. Next create an API gateway for the new lambda. An example swagger file can be
+   found under /apigw/{stage}
+4. Now go into the resource, for example /facebook/webook/GET and click on
+   integration. Change the region for the lambda integration to the correct
+   region and then click the green check mark. After that, you will have to
+   enter the string cognicity-facebook-webhook-{stageVariables.env}. Because of
+   the use of stageVariables, AWS can't update the lambda policy on its own to
+   allow API gateway to call the lambda function. A popup will show the required
+   aws cli commands to change the access policy. Do this for all of the methods.
+5. Deploy the api and give the correct stagename variable by going to
+   stages>stage variables then adding env: prod. Now go to
+   stages>{stageVariable} and look at the invoke url. Copy paste that and try to
+   hit a defined method. You should see {"message": "Internal server error"}
+   with a 500 error code. If you get a 403 there's most likely something
+   misconfigured in API gateway/ the integration between api gateway and the
+   lambda.
+6. Now configure the lambda environment variables as defined in src/configure.js
+   by going to the lambda aws console and picking a lambda.
+7. Go to facebook, create a page.
+8. Go to developers.facebook.com, add new app. Then add messanger product and
+   under token generation, select the page that was created in step 6. Copy the
+   page access token and put it into the FACEBOOK_PAGE_ACCESS_TOKEN in the aws
+   lambda configuration.
+9. Add the correct url to the facebook webhook configuration. This is the same url as from step 5.
+   messages and messages_postbacks are the events needed. Create the FACEBOOK_VALIDATION_TOKEN on lastpass and save it. After validating, subscribe to the page created in step 7. 
+
+10. Run the scripts in the ./commands folder to set up the greeting and get
+    started buttons. The scripts only have to be run once, but ensure that the
+    correct environment values are set before running them. 
+11. In order to get replies working, you must change the NOTIFY_ENDPOINT on the
+    corresponding Elastic Beanstalk Instance.
+
 
 ### Configuration
 Save a copy of sample.env as .env in local directory with appropriate credentials as defined in sample.env
