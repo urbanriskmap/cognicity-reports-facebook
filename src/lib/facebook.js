@@ -208,6 +208,7 @@ export default class Facebook {
         .then((response) => resolve(response))
         .catch((err) => {
           console.log(err);
+          console.log(err.response);
           reject(err);
         });
     });
