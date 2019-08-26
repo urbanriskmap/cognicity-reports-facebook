@@ -14,7 +14,7 @@ export default {
     DEFAULT_INSTANCE_REGION_CODE: process.env.DEFAULT_INSTANCE_REGION_CODE || 'brw',
     DEFAULT_LANGUAGE: process.env.DEFAULT_LANGUAGE || 'id',
     FACEBOOK_APP_SECRET: process.env.FACEBOOK_APP_SECRET || 'secret',
-    FACEBOOK_ENDPOINT: process.env.FACEBOOK_ENDPOINT || 'https://graph.facebook.com/v2.6/me/messages',
+    FACEBOOK_ENDPOINT: process.env.FACEBOOK_ENDPOINT || 'https://graph.facebook.com/v4.0/me/messages',
     FACEBOOK_PAGE_ACCESS_TOKEN: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
     FACEBOOK_VALIDATION_TOKEN: process.env.FACEBOOK_VALIDAION_TOKEN,
     MAP_URL: process.env.MAP_URL || 'https://riskmap.us/',

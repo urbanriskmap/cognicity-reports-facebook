@@ -22,7 +22,7 @@ export default class Locale {
      */
     get(userId) {
         return new Promise((resolve, reject) => {
-            const request = 'https://graph.facebook.com/v2.6/' +
+            const request = 'https://graph.facebook.com/v4.0/' +
                 userId + '?fields=locale' + '&access_token=' +
                 this.config.FACEBOOK_PAGE_ACCESS_TOKEN;
             this.axios.get(request)
@@ -31,6 +31,7 @@ export default class Locale {
                 })
                 .catch((err) => {
                     console.log('Error getting user locale.' + err.message);
+                    console.log(err);
                     resolve(this.config.DEFAULT_LANGUAGE);
                 });
         });

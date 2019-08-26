@@ -92,7 +92,7 @@ export default function() {
       };
       facebook.sendThanks(body)
         .then((res) => {
-          test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token='+config.FACEBOOK_PAGE_ACCESS_TOKEN);
+          test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token='+config.FACEBOOK_PAGE_ACCESS_TOKEN);
           test.value(res.body.recipient.id).is('1');
           test.value(res.body.message.attachment.payload.text)
               .contains('mocked thanks message');
@@ -186,7 +186,7 @@ export default function() {
 
       facebook.sendReply(payload.entry[0].messaging[0])
         .then((res) => {
-            test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
+            test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
@@ -216,7 +216,7 @@ export default function() {
 
         facebook.sendReply(payload.entry[0].messaging[0])
           .then((res) => {
-            test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
+            test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)
@@ -248,7 +248,7 @@ export default function() {
 
         facebook.sendReply(payload.entry[0].messaging[0])
             .then((res) => {
-            test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
+            test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
                 test.value(res.body.recipient.id).is('1');
                 test.value(res.body.message.attachment.payload.text)
@@ -280,9 +280,9 @@ export default function() {
 
         facebook.sendReply(payload.entry[0].messaging[0])
             .then((res) => {
-            test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
+            test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
-            test.value(res.props).is('https://graph.facebook.com/v2.6/me/messages/?access_token=' +
+            test.value(res.props).is('https://graph.facebook.com/v4.0/me/messages/?access_token=' +
                 config.FACEBOOK_PAGE_ACCESS_TOKEN);
             test.value(res.body.recipient.id).is('1');
             test.value(res.body.message.attachment.payload.text)

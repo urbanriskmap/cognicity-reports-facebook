@@ -206,7 +206,10 @@ export default class Facebook {
       console.log(JSON.stringify(properties.body));
       this.axios.post(properties.request, properties.body)
         .then((response) => resolve(response))
-        .catch((err) => reject(err));
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
     });
   }
 
