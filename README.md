@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook.svg?branch=dev)](https://travis-ci.org/urbanriskmap/cognicity-reports-facebook) [![Coverage Status](https://coveralls.io/repos/github/urbanriskmap/cognicity-reports-facebook/badge.svg?branch=dev)](https://coveralls.io/github/urbanriskmap/cognicity-reports-facebook?branch=dev) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0) 
 
+
+# :no_entry_sign: DEPRECATED
+________
+
 # cognicity-reports-facebook
 This module deploys AWS lambda functions that, after user initiates a conversation via Facebook messenger, uses the cognicity-bot-core module to fetch a report card from a CogniCity server and sends it to the user.
 
